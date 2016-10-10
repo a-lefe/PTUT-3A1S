@@ -58,7 +58,7 @@
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         <h3>Départs de Lyon</h3>
-        <img src="images\logoaeroportdelyon.png" alt="logoaeroportdelyon" style="width: 200px;">
+        <img src="images\logoaeroportdelyon.png" alt="logoaeroportdelyon" height="140" width="320" style="float: right;">
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
       </div>
@@ -72,7 +72,7 @@
         <center><h3>Vols en temps réel au départ de Lyon</h3></center>
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
           <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
-            <i class="material-icons">play_circle_filled</i>
+            <i class="material-icons"><img src="images\logoaeroportdelyon2.png" alt="logoaeroportdelyon" height="200" width="200"></i>
           </header>
           <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
             <div class="mdl-card__supporting-text">
@@ -80,20 +80,34 @@
               Vols en temps réel au départ de l'aéroport Lyon Saint-Exupéry
             </div>
             <div class="mdl-card__supporting-text">
-            <table>
-             <tr>
-              <th>Vol</th>
-              <th>Départ</th>
-              <th>Destination</th>
-             </tr>
-             <tr> 
-               <td>...</td>
-               <td>...</td>
-               <td>...</td>
-             </tr>
-           </table>
-           </div>
-           <div class="mdl-card__actions">
+              <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+                <thead>
+                  <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Vol</th>
+                    <th>Destination</th>
+                    <th>Compagnie</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">AA816</td>
+                    <td>New-York</td>
+                    <td>American Airlines</td>
+                  </tr>
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">EJ678</td>
+                    <td>Montreal</td>
+                    <td>Easy Jet</td>
+                  </tr>
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">AF344</td>
+                    <td>Paris</td>
+                    <td>Air France</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mdl-card__actions">
              <a href="#" class="mdl-layout__tab">Voir tous les vols</a>
            </div>
          </div>
