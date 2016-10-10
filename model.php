@@ -7,19 +7,21 @@ header('Content-type: application/json');
 $obj = new stdClass();
 
 $databases = array(
-                'host'      => 'host',
-                'database'  => 'db',
-                'login'     => 'login',
-                'password'  => 'password',
+                'host'      => 'localhost',
+                'database'  => 'plane_info',
+                'login'     => 'root',
+                'password'  => '',
             );
 
 $pdo = new PDO('mysql:host='.$databases['host'].';dbname='.$databases['database'].'; charset=utf8', $databases['login'], $databases['password']);
 
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
+$info1 = $_POST["info1"];
+$info2 = $_POST["info2"];
 /*Mettre un switch suivant les stats choisis, exemple : */
-$sql = $pdo->prepare("SELECT * FROM user WHERE mail= ? AND mdp = ?");
-$sql->execute(array($mail, $pass));
+$sql = $pdo->prepare("SELECT * FROM planeInfo WHERE info1= ? AND info2 = ?");
+$sql->execute(array($info1, $info2));
 $result = $sql->fetch();
 
 if(!is_array($result))

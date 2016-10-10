@@ -1,16 +1,17 @@
 /**
  * Created by Epulapp on 05/10/2016.
  */
-$(document).ready(function(){
-    $("#searchInfo").submit(function(){
-        $.ajax({
-            url: "../model/model.php",
-            type: 'POST',
-            data: 'typeStat=' + $("#typeState").text
-        }).success(function(result){
-            alert(result);
-        }).error(function(){
-            alert("Erreur")
-        })
+$(document).ready(function() {
+    $("#testFichier").submit(function () {
+        ajax({
+            url: "./getDataPlane.php",
+            type: 'GET',
+            success: function () {
+                alert("Fichier remplit")
+            },
+            error: function () {
+                alert("Erreur")
+            }
+        });
     });
-})
+});
