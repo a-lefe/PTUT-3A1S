@@ -1,16 +1,20 @@
 <?php
+error_reporting(0);
+// Connexion à la bdd
+require_once('model.php');
 // Récupération des données au format json
 $jsondata = file_get_contents('all_data.json');
 // Passage des données dans un tableau
 $data = json_decode($jsondata, true);
 // Parcours de toutes les lignes
-foreach $data as $line {
+foreach ($data as $key => $line) {
+	//var_dump($line);
 	// On place dans des variables toutes les données de la ligne
 	$airportresources_checkin_desks = $line['airportresources_checkin_desks'];
 	$airlines_airline_name = $line['airlines_airline_name'];
 	$flightnumbers_tripnumber = $line['flightnumbers_tripnumber'];
 	$remark_description = $line['remark_description'];
-	$airports_next_name = $line['airports_next_name'];
+	$airports_next_name = $line['airports_necxt_name'];
 	$aircraft_aircrafttype_icaocode = $line['aircraft_aircrafttype_icaocode'];
 	$remark_code = $line['remark_code'];
 	$flightnumbers_icaoflightnumber = $line['flightnumbers_icaoflightnumber'];
@@ -61,5 +65,7 @@ foreach $data as $line {
 	// Sinon un nouveau tuple est inséré
 	$req = "REPLACE INTO planeInfo (airportresources_checkin_desks, airlines_airline_name, flightnumbers_tripnumber, remark_description, airports_next_name, aircraft_aircrafttype_icaocode, remark_code, flightnumbers_icaoflightnumber, airports_next_iatacode, timestamps_sobt, countrytype_code, flightnumbers_operatortripnumber, gid, timestamps_cancellationdate, airports_destination_iatacode, countrytype_description, flightnumbers_suffix, airports_destination_icaocode, flightnumbers_internalflightnumber, turnflightinternalid, airportresources_terminal, timestamps_atot, airportresources_boarding_departurelounge, flightnumbers_operatoriataflightnumber, timestamps_eobt, timestamps_modificationdate, airlines_airline_icaocode, airports_destination_name, servicetype_description, flightnumbers_callsign, last_update_fme, flightnumbers_operatorinternalflightnumber, servicetype_iatacode, flightstatus_code, flightstatus_description, aircraft_aircrafttype_iatacode, airlines_operator_iatacode, flightnumbers_operatorsuffix, publiccomment, airportresources_checkin_checkinarea, airlines_airline_iatacode, airlines_operator_icaocode, aircraft_aircrafttype_modelname, airportresources_boarding_gates, flightnumbers_iataflightnumber, flightnumbers_operatoricaoflightnumber, airports_next_icaocode, timestamps_aobt, airlines_operator_name)
 		VALUES ('$airportresources_checkin_desks', '$airlines_airline_name', '$flightnumbers_tripnumber', '$remark_description', '$airports_next_name', '$aircraft_aircrafttype_icaocode', '$remark_code', '$flightnumbers_icaoflightnumber', '$airports_next_iatacode', '$timestamps_sobt', '$countrytype_code', '$flightnumbers_operatortripnumber', '$gid', '$timestamps_cancellationdate', '$airports_destination_iatacode', '$countrytype_description', '$flightnumbers_suffix', '$airports_destination_icaocode', '$flightnumbers_internalflightnumber', '$turnflightinternalid', '$airportresources_terminal', '$timestamps_atot', '$airportresources_boarding_departurelounge', '$flightnumbers_operatoriataflightnumber', '$timestamps_eobt', '$timestamps_modificationdate', '$airlines_airline_icaocode', '$airports_destination_name', '$servicetype_description', '$flightnumbers_callsign', '$last_update_fme', '$flightnumbers_operatorinternalflightnumber', '$servicetype_iatacode', '$flightstatus_code', '$flightstatus_description', '$aircraft_aircrafttype_iatacode', '$airlines_operator_iatacode', '$flightnumbers_operatorsuffix', '$publiccomment', '$airportresources_checkin_checkinarea', '$airlines_airline_iatacode', '$airlines_operator_icaocode', '$aircraft_aircrafttype_modelname', '$airportresources_boarding_gates', '$flightnumbers_iataflightnumber', '$flightnumbers_operatoricaoflightnumber', '$airports_next_icaocode', '$timestamps_aobt', '$airlines_operator_name')";
+	$res = mysql_query($req);
+	var_dump($res);
 }
 ?>
