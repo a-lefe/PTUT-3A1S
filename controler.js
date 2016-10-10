@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
     $("#testFichier").submit(function () {
-        ajax({
+        $.ajax({
             url: "./getDataPlane.php",
             type: 'GET',
             success: function () {
@@ -14,4 +14,16 @@ $(document).ready(function() {
             }
         });
     });
+    $("#testInsertion").submit(function () {
+        $.ajax({
+            url: "./jsonToBDD.php",
+            type: 'GET',
+            success: function () {
+                alert("Insertion réussi")
+            },
+            error: function () {
+                alert("Erreur")
+            }
+        })
+    })
 });
