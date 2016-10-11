@@ -83,31 +83,15 @@
               Vols en temps réel au départ de l'aéroport Lyon Saint-Exupéry
             </div>
             <div class="mdl-card__supporting-text">
-              <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+              <table id="indexArray" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
                 <thead>
                   <tr>
-                  <th class="mdl-data-table__cell--non-numeric">Vol</th>
+                    <th class="mdl-data-table__cell--non-numeric">Vol</th>
                     <th>Destination</th>
                     <th>Compagnie</th>
+                    <th>Heure de départ</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">AA816</td>
-                    <td>New-York</td>
-                    <td>American Airlines</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">EJ678</td>
-                    <td>Montreal</td>
-                    <td>Easy Jet</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">AF344</td>
-                    <td>Paris</td>
-                    <td>Air France</td>
-                  </tr>
-                </tbody>
               </table>
             </div>
             <div class="mdl-card__actions">
@@ -140,7 +124,7 @@
         </div>
       </section>
     </div>
-      <script src="js/Chart.js/chart.js"></script>
+      <script src="js/Chart.js/Chart.js"></script>
     <div class="mdl-layout__tab-panel" id="features">
         <section class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col">
@@ -274,6 +258,8 @@
 
 
 <script src="js/mdl-selectfield.min.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="controler.js"></script>
 <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 <!-- build:js scripts/main.min.js -->
 <script src="scripts/main.js"></script>
