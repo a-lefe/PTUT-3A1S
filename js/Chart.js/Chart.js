@@ -2233,7 +2233,7 @@ module.exports = function(Chart) {
 					ctx.strokeStyle = vm.borderColor;
 					ctx.lineWidth = vm.borderWidth;
 
-					// Corner points, from bottom-left to bottom-right clockwise
+					// Corner points, from bottom-left to bottom-right  clockwise
 					// | 1 2 |
 					// | 0 3 |
 					var corners = [
