@@ -22,6 +22,53 @@ $(document).ready(function() {
         error: function (result) {
             alert(result[0]);
         }
+    });
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=numberFlyByAirline",
+        success: function (result) {
+            var labels = [];
+            var data = [];
+            var backgroundColor = [];
+            var borderColor = [];
+            for(var i = 0; i < result.length; ++i){
+                labels.push(result[i][0]);
+                data.push(result[i][1]);
+                var color = 'rgba(' + Math.floor((Math.random() * 255)) + ',' + Math.floor((Math.random() * 255))
+                    + ',' + Math.floor((Math.random() * 255));
+                backgroundColor.push(color + ',0.2)');
+                borderColor.push(color + ', 1)');
+            }
+            var ctx = $("#myChart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets:[{
+                        label: "Nombre de vol",
+                        data: data,
+                        backgroundColor: backgroundColor,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true,
+                                max: 100,
+                                stepSize: 2
+                            }
+                        }],
+                        xAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+        }
     })
     // $("#testFichier").submit(function () {
     //     $.ajax({

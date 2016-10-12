@@ -60,7 +60,7 @@
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         <h3>Départs de Lyon</h3>
           <div class="mdl-layout-spacer">
-              <img src="images\logo.png" alt="logoaeroportdelyon">
+              <img src="images/logo.png" alt="logoaeroportdelyon">
           </div>
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
@@ -75,7 +75,7 @@
         <center><h3>Vols en temps réel au départ de Lyon</h3></center>
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
           <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
-            <i class="material-icons"><img src="images\logoaeroportdelyon2.png" alt="logoaeroportdelyon" height="200" width="200"></i>
+            <i class="material-icons"><img src="images/logoaeroportdelyon2.png" alt="logoaeroportdelyon" height="200" width="200"></i>
           </header>
           <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
             <div class="mdl-card__supporting-text">
@@ -98,14 +98,6 @@
              <a href="#" class="mdl-layout__tab">Voir tous les vols</a>
            </div>
          </div>
-         <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
-          <i class="material-icons">more_vert</i>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
-          <li class="mdl-menu__item">1</li>
-          <li class="mdl-menu__item" /*disabled*/>2</li>
-          <li class="mdl-menu__item">3</li>
-        </ul>
       </section>
       <section class="section--footer mdl-color--white mdl-grid">
         <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
@@ -127,48 +119,8 @@
       <script src="js/Chart.js/Chart.js"></script>
     <div class="mdl-layout__tab-panel" id="features">
         <section class="mdl-grid">
-            <div class="mdl-cell mdl-cell--8-col">
-                <canvas id="myChart" width="400" height="200"></canvas>
-                <script>
-                    var ctx = document.getElementById("myChart");
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero:true
-                                    }
-                                }]
-                            }
-                        }
-                    });
-                </script>
-
+            <div style="overflow: auto;" class="mdl-cell mdl-cell--8-col">
+                <canvas id="myChart" height="200"></canvas>
             </div>
             <div class="mdl-cell mdl-cell--2-col">
                 <form>
