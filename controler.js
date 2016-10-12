@@ -7,7 +7,6 @@ $(document).ready(function() {
         type: "POST",
         data: "queryToExecute=indexArray",
         success: function (result) {
-            var tbody = $("<tbody>");
             for(var i = 0; i < result.length; ++i){
                 var tr = $("<tr>");
                 for(var j = 0; j < 4; ++j){
@@ -15,9 +14,9 @@ $(document).ready(function() {
                     td.html(result[i][j]);
                     tr.append(td);
                 }
-                tbody.append(tr);
+                $(".tableData").append(tr);
             }
-            $("#indexArray").append(tbody);
+            
         },
         error: function (result) {
             alert(result[0]);
@@ -32,9 +31,11 @@ $(document).ready(function() {
             var data = [];
             var backgroundColor = [];
             var borderColor = [];
+            var max = 0;
             for(var i = 0; i < result.length; ++i){
                 labels.push(result[i][0]);
                 data.push(result[i][1]);
+                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
                 var color = 'rgba(' + Math.floor((Math.random() * 255)) + ',' + Math.floor((Math.random() * 255))
                     + ',' + Math.floor((Math.random() * 255));
                 backgroundColor.push(color + ',0.2)');
@@ -58,8 +59,8 @@ $(document).ready(function() {
                         yAxes: [{
                             ticks: {
                                 beginAtZero:true,
-                                max: 100,
-                                stepSize: 2
+                                max: max+1,
+                                stepSize: (max/10)
                             }
                         }],
                         xAxes: [{
