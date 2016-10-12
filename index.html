@@ -43,7 +43,8 @@
     material.blue-orange.min.css
     material.purple-indigo.min.css
   -->
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.red-orange.min.css">
+  <link rel="stylesheet" href="styles/material.style.css"/>
 
   <!-- Material Design icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -55,7 +56,7 @@
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      <div  class="mdl-layout--large-screen-only mdl-layout__header-row recolor">
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         <h3>Départs de Lyon</h3>
@@ -171,7 +172,6 @@
 
             </div>
             <div class="mdl-cell mdl-cell--2-col">
-                <form>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input id="First" type="text" class="mdl-textfield__input"/>
                     <label class="mdl-textfield__label" for="First">First</label>
@@ -185,70 +185,34 @@
                     <label class="mdl-textfield__label" for="Third">Third</label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                    <input class="mdl-textfield__input"type="text" id="country" readonly/>
-                    <label class="mdl-textfield__label" for="country">Country</label>
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="country">
-                      <li class="mdl-menu__item" data-val="BLR">Belarus</li>
-                      <li class="mdl-menu__item" data-val="RUS">Russia</li>
+                    <input class="mdl-textfield__input"type="text" id="company" readonly/>
+                    <label class="mdl-textfield__label" for="company">Compagnie</label>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="company">
+                      <li class="mdl-menu__item" data-val="AFR">Air France</li>
+                      <li class="mdl-menu__item" data-val="AAL">Air Algeria</li>
                     </ul>
                   </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                    <input class="mdl-textfield__input"type="text" id="dataset" readonly/>
+                    <label class="mdl-textfield__label" for="dataset">Choix Graphique</label>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="dataset">
+                      <li class="mdl-menu__item" data-val="AFR">Graphique 1</li>
+                      <li class="mdl-menu__item" data-val="AAL">Graphique 2</li>
+                    </ul>
+                  </div>
+                  <input value="Add Dataset" type="button" id="addset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"/>
                   <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"/>
                 </form>
-
             </div>
         </section>
     </div>
 
-    <footer class="mdl-mega-footer">
-      <div class="mdl-mega-footer--middle-section">
-        <div class="mdl-mega-footer--drop-down-section">
-          <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
-          <h1 class="mdl-mega-footer--heading">Features</h1>
-          <ul class="mdl-mega-footer--link-list">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Partners</a></li>
-            <li><a href="#">Updates</a></li>
-          </ul>
-        </div>
-        <div class="mdl-mega-footer--drop-down-section">
-          <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
-          <h1 class="mdl-mega-footer--heading">Details</h1>
-          <ul class="mdl-mega-footer--link-list">
-            <li><a href="#">Spec</a></li>
-            <li><a href="#">Tools</a></li>
-            <li><a href="#">Resources</a></li>
-          </ul>
-        </div>
-        <div class="mdl-mega-footer--drop-down-section">
-          <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
-          <h1 class="mdl-mega-footer--heading">Technology</h1>
-          <ul class="mdl-mega-footer--link-list">
-            <li><a href="#">How it works</a></li>
-            <li><a href="#">Patterns</a></li>
-            <li><a href="#">Usage</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Contracts</a></li>
-          </ul>
-        </div>
-        <div class="mdl-mega-footer--drop-down-section">
-          <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
-          <h1 class="mdl-mega-footer--heading">FAQ</h1>
-          <ul class="mdl-mega-footer--link-list">
-            <li><a href="#">Questions</a></li>
-            <li><a href="#">Answers</a></li>
-            <li><a href="#">Contact us</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="mdl-mega-footer--bottom-section">
-        <div class="mdl-logo">
-          More Information
-        </div>
-        <ul class="mdl-mega-footer--link-list">
-          <li><a href="https://developers.google.com/web/starter-kit/">Web Starter Kit</a></li>
-          <li><a href="#">Help</a></li>
-          <li><a href="#">Privacy and Terms</a></li>
+    <footer class="mdl-mini-footer">
+      <div class="mdl-mini-footer__left-section">
+        <div class="mdl-logo">Copyright</div>
+        <ul class="mdl-mini-footer__link-list">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Privacy & Terms</a></li>
         </ul>
       </div>
     </footer>
