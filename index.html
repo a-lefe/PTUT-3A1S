@@ -119,41 +119,46 @@
       <script src="js/Chart.js/Chart.js"></script>
     <div class="mdl-layout__tab-panel" id="features">
         <section class="mdl-grid">
-            <div style="overflow: auto;" class="mdl-cell mdl-cell--8-col">
+            <div id="canvasDiv" class="mdl-cell mdl-cell--8-col">
                 <canvas id="myChart" height="200"></canvas>
             </div>
-            <div class="mdl-cell mdl-cell--2-col">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input id="First" type="text" class="mdl-textfield__input"/>
-                    <label class="mdl-textfield__label" for="First">First</label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input id="Second" type="text" class="mdl-textfield__input"/>
-                    <label class="mdl-textfield__label" for="Second">Second</label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input id="Third" type="text" class="mdl-textfield__input"/>
-                    <label class="mdl-textfield__label" for="Third">Third</label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                    <input class="mdl-textfield__input"type="text" id="company" readonly/>
-                    <label class="mdl-textfield__label" for="company">Compagnie</label>
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="company">
-                      <li class="mdl-menu__item" data-val="AFR">Air France</li>
-                      <li class="mdl-menu__item" data-val="AAL">Air Algeria</li>
-                    </ul>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+            <div style="height: 200px" class="mdl-cell mdl-cell--2-col">
+              <p id="pInfo" style="height: 50px">
+                Selectionnez les statistiques que vous souhaitez
+              </p>
+                  <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label">-->
+                    <!--<input id="First" type="text" class="mdl-textfield__input"/>-->
+                    <!--<label class="mdl-textfield__label" for="First">First</label>-->
+                  <!--</div>-->
+                  <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label">-->
+                    <!--<input id="Second" type="text" class="mdl-textfield__input"/>-->
+                    <!--<label class="mdl-textfield__label" for="Second">Second</label>-->
+                  <!--</div>-->
+                  <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label">-->
+                    <!--<input id="Third" type="text" class="mdl-textfield__input"/>-->
+                    <!--<label class="mdl-textfield__label" for="Third">Third</label>-->
+                  <!--</div>-->
+                  <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label getmdl-select">-->
+                    <!--<input class="mdl-textfield__input"type="text" id="company" readonly/>-->
+                    <!--<label class="mdl-textfield__label" for="company">Compagnie</label>-->
+                    <!--<ul class="mdl-menu mdl-menu&#45;&#45;bottom-left mdl-js-menu" for="company">-->
+                      <!--<li class="mdl-menu__item" data-val="AFR">Air France</li>-->
+                      <!--<li class="mdl-menu__item" data-val="AAL">Air Algeria</li>-->
+                    <!--</ul>-->
+                  <!--</div>-->
+                  <div id="selectGraph" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                     <input class="mdl-textfield__input"type="text" id="dataset" readonly/>
                     <label class="mdl-textfield__label" for="dataset">Choix Graphique</label>
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="dataset">
-                      <li class="mdl-menu__item" data-val="AFR">Graphique 1</li>
-                      <li class="mdl-menu__item" data-val="AAL">Graphique 2</li>
+                    <ul id="selectStat" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="dataset">
+                      <li class="mdl-menu__item" data-val="NbrVol" onmouseover="changeInfo('NbrVol')">Vol des companies</li>
+                      <li class="mdl-menu__item" data-val="PercentVol" onmouseover="changeInfo('PercentVol')">% de vol des companies</li>
+                      <li class="mdl-menu__item" data-val="NbrPlaneVol" onmouseover="changeInfo('NbrPlaneVol')">Vol des avions</li>
+                      <li class="mdl-menu__item" data-val="CompaniePerPlane" onmouseover="changeInfo('CompaniePerPlane')">Companie par avions</li>
                     </ul>
                   </div>
-                  <input value="Add Dataset" type="button" id="addset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"/>
-                  <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"/>
-                </form>
+                  <br/>
+                  <!--<input value="Add Dataset" type="button" id="addset" class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;accent"/>-->
+                  <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Valider</button>
             </div>
         </section>
     </div>
