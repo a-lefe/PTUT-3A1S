@@ -3,15 +3,15 @@
  */
 $(document).ready(function() {
     $.ajax({
-        url: "./connect_mysql.php",
+        url: "./model.php",
         type: "POST",
         data: "queryToExecute=indexArray",
         success: function (result) {
-            var tbody = $(tbody);
+            var tbody = $("<tbody>");
             for(var i = 0; i < result.length; ++i){
-                var tr = $(tr);
-                for(var j = 0; j < result[i].length; ++j){
-                    var td = $(td);
+                var tr = $("<tr>");
+                for(var j = 0; j < 4; ++j){
+                    var td = $("<td>");
                     td.html(result[i][j]);
                     tr.append(td);
                 }
@@ -47,5 +47,4 @@ $(document).ready(function() {
     //         }
     //     })
     // })
-    $()
 });
