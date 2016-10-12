@@ -16,16 +16,16 @@
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="Web Starter Kit">
-  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+  <link rel="icon" sizes="192x192" href="images\logoaeroportdelyon2.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="images\logoaeroportdelyon2.png">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileImage" content="images\logoaeroportdelyon2.png">
   <meta name="msapplication-TileColor" content="#2F3BA2">
 
   <!-- Color the status bar on mobile devices -->
@@ -59,13 +59,15 @@
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         <h3>Départs de Lyon</h3>
-        <img src="images\logoaeroportdelyon.png" alt="logoaeroportdelyon" height="140" width="320" style="float: right;">
+          <div class="mdl-layout-spacer">
+              <img src="images\logoaeroportdelyon.png" alt="logoaeroportdelyon" height="140" width="320">
+          </div>
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
       </div>
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
         <a href="#overview" class="mdl-layout__tab is-active">Tous les vols</a>
-        <a href="#features" class="mdl-layout__tab">Features</a>
+        <a href="#features" class="mdl-layout__tab">Statistique</a>
       </div>
     </header>
     <main class="mdl-layout__content">
@@ -81,31 +83,15 @@
               Vols en temps réel au départ de l'aéroport Lyon Saint-Exupéry
             </div>
             <div class="mdl-card__supporting-text">
-              <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+              <table id="indexArray" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
                 <thead>
                   <tr>
-                  <th class="mdl-data-table__cell--non-numeric">Vol</th>
+                    <th class="mdl-data-table__cell--non-numeric">Vol</th>
                     <th>Destination</th>
                     <th>Compagnie</th>
+                    <th>Heure de départ</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">AA816</td>
-                    <td>New-York</td>
-                    <td>American Airlines</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">EJ678</td>
-                    <td>Montreal</td>
-                    <td>Easy Jet</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">AF344</td>
-                    <td>Paris</td>
-                    <td>Air France</td>
-                  </tr>
-                </tbody>
               </table>
             </div>
             <div class="mdl-card__actions">
@@ -271,6 +257,8 @@
 
 
 <script src="js/mdl-selectfield.min.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="controler.js"></script>
 <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 <script src="js/Chart.js/Chart.js"></script>
 <!-- build:js scripts/main.min.js -->
