@@ -7,7 +7,6 @@ $(document).ready(function() {
         type: "POST",
         data: "queryToExecute=indexArray",
         success: function (result) {
-            var tbody = $("<tbody>");
             for(var i = 0; i < result.length; ++i){
                 var tr = $("<tr>");
                 for(var j = 0; j < 4; ++j){
@@ -15,9 +14,9 @@ $(document).ready(function() {
                     td.html(result[i][j]);
                     tr.append(td);
                 }
-                tbody.append(tr);
+                $(".tableData").append(tr);
             }
-            $("#indexArray").append(tbody);
+            
         },
         error: function (result) {
             alert(result[0]);
