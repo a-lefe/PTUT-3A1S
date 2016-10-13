@@ -11,11 +11,19 @@ $(document).ready(function() {
         success: function (result) {
             for(var i = 0; i < result.length; ++i){
                 var tr = $("<tr>");
-                for(var j = 0; j < 4; ++j){
+                for(var j = 1; j < 5; ++j){
                     var td = $("<td>");
                     td.html(result[i][j]);
                     tr.append(td);
                 }
+                tr.click(function(){
+                    $("body").append("<div class=\"dialog\" title=\"Informations supplémentaires\">");
+                    $(".dialog").dialog({
+                        width : 400,
+                        close : function(){$(".dialog").remove()}
+                    });
+                    $(".dialog").dialog("open");
+                });
                 $(".tableData").append(tr);
             }
             
