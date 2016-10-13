@@ -34,6 +34,7 @@ $(document).ready(function() {
         var newCanvas = $("<canvas>");
         newCanvas.attr("id","myChart");
         newCanvas.attr("height","200");
+        newCanvas.attr("style","display: none");
         $("#canvasDiv").append(newCanvas);
         switch(selectItem){
             case "NbrVol":
@@ -50,6 +51,9 @@ $(document).ready(function() {
                 break;
             case "PlanePerCompany":
                 planePerCompany();
+                break;
+            case "CancelFly":
+                cancelFly();
                 break;
             default:
                 return;
@@ -236,6 +240,59 @@ function planePerCompany() {
     });
 }
 
+function cancelFly() {
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=cancelFly",
+        success: function (result) {
+            var labels = [];
+            var dataCancel = [];
+            var dataTotFly = [];
+            var datasets = [];
+            var backgroundColor = [];
+            var borderColor = [];
+            var max = 0;
+            for(var i = 0; i < result.length; ++i){
+                labels.push(result[i][0]);
+                dataCancel.push(result[i][1]);
+                dataTotFly.push(result[i][2]);
+                if(parseInt(result[i][2]) > max) max = parseInt(result[i][2]);
+                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
+                    + ',' + Math.floor((Math.random() * 223));
+                backgroundColor.push(color + ',0.2)');
+                borderColor.push(color + ', 1)');
+            }
+            datasets.push({label : "Vol annulé", data: dataCancel, backgroundColor: backgroundColor,
+                borderColor: borderColor, borderWidth: 1});
+            datasets.push({label : "Vol total", data: dataTotFly, backgroundColor: backgroundColor,
+                borderColor: borderColor, borderWidth: 1});
+            var ctx = $("#myChart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            type: "logarithmic",
+                            ticks: {
+                                beginAtZero:true,
+                                min: 0,
+                                max: max + max/10,
+                                stepSize: max/10
+                            }
+                        }]
+                    }
+                }
+            });
+            ctx.fadeIn("slow");
+        }
+    });
+}
+
 function createGraph(labels, label, data, backgroundColor, borderColor, yType, max, stepSize){
     var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
@@ -285,6 +342,9 @@ function changeInfo(selectedLi) {
             break;
         case "PlanePerCompany":
             p.html("Avion(s) utilisé(s) par une companie");
+            break;
+        case "CancelFly":
+            p.html("Nombre de vol(s) annulé(s) par les companies");
             break;
         default:
             p.html("Cas non implémenté");

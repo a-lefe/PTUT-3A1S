@@ -11,7 +11,7 @@ $result = null;
 
 switch($queryToExecute){
     case "indexArray":
-        $sql = $pdo->prepare("SELECT flightnumbers_tripnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC");
+        $sql = $pdo->prepare("SELECT flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC");
         $sql->execute();
         $result = $sql->fetchAll();
         break;
@@ -50,6 +50,11 @@ switch($queryToExecute){
         $company = $_POST['company'];
         $sql = $pdo->prepare("SELECT aircraft_aircrafttype_icaocode, COUNT(*) FROM plane WHERE airlines_airline_name = ? GROUP BY aircraft_aircrafttype_icaocode");
         $sql->execute(array($company));
+        $result = $sql->fetchAll();
+        break;
+    case "cancelFly":
+        $sql = $pdo->prepare("SELECT airlines_airline_name, ( SELECT COUNT(*) FROM plane WHERE timestamps_cancellationdate <> 'None' and p.airlines_airline_name = airlines_airline_name) as cancelFly, (SELECT COUNT(*) FROM plane WHERE airlines_airline_name = p.airlines_airline_name) as totFly FROM plane p GROUP BY airlines_airline_name");
+        $sql->execute();
         $result = $sql->fetchAll();
         break;
     default:
