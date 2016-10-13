@@ -1,8 +1,6 @@
 /**
  * Created by Epulapp on 05/10/2016.
  */
-var mode;
-var iterateur;
 $(document).ready(function() {
     $.ajax({
         url: "./model.php",
@@ -58,36 +56,55 @@ $(document).ready(function() {
         }
     })
 
-    //Ajout d'un input si une deuxième entrée est attendue
+    //Affichage d'un input si une deuxième entrée est attendue
     $("#dataset").change(function () {
         var selectItem = $("#dataset").attr("data-val");
-        $("#jsDiv").remove();
-        if(selectItem == "CompanyPerPlane" || selectItem == "PlanePerCompany"){
+        var selectPlane = $("#selectPlane");
+        var selectCompany = $("#selectCompany");
+        selectPlane.hide();
+        selectCompany.hide();
+        if(selectItem == "CompanyPerPlane")
+            selectPlane.show();
+        else if (selectItem == "PlanePerCompany")
+            selectCompany.show();
 
-        }
     })
 });
 
 function initHiddenInput() {
-    mode = [["getPlane", "planeUl"], ["getCompany", "companyUl"]];
-    for(iterateur = 0; iterateur < mode.length; ++iterateur) {
-        $.ajax({
-            url: "./model.php",
-            type: "POST",
-            data: "queryToExecute=" + mode[iterateur][0],
-            success: function (result) {
-                var ul = $("#"+ mode[iterateur][1]);
-                for (var j = 0; j < result.length; ++j) {
-                    var li = $("<li>");
-                    li.attr("class", "mdl-menu__item");
-                    li.attr("data-val", result[j][0]);
-                    //li.attr("onclick", "changeInputValue('" + result[j][0] + "')");
-                    li.html(result[j][0]);
-                    ul.append(li);
-                }
+    var mode = [["getPlane", "planeUl"], ["getCompany", "companyUl"]];
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=" + mode[0][0],
+        success: function (result) {
+            var ul = $("#"+ mode[0][1]);
+            for (var j = 0; j < result.length; ++j) {
+                var li = $("<li>");
+                li.attr("class", "mdl-menu__item");
+                li.attr("data-val", result[j][0]);
+                //li.attr("onclick", "changeInputValue('" + result[j][0] + "')");
+                li.html(result[j][0]);
+                ul.append(li);
             }
-        });
-    }
+        }
+    });
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=" + mode[1][0],
+        success: function (result) {
+            var ul = $("#"+ mode[1][1]);
+            for (var j = 0; j < result.length; ++j) {
+                var li = $("<li>");
+                li.attr("class", "mdl-menu__item");
+                li.attr("data-val", result[j][0]);
+                //li.attr("onclick", "changeInputValue('" + result[j][0] + "')");
+                li.html(result[j][0]);
+                ul.append(li);
+            }
+        }
+    });
 }
 function numberFlyByAirline() {
     $.ajax({
@@ -166,7 +183,7 @@ function numberFlyPerPlane(){
 }
 
 function companyPerPlane() {
-    var planeSelected = $("#jsInput").attr("data-val");
+    var planeSelected = $("#plane").attr("data-val");
     $.ajax({
         url: "./model.php",
         type: "POST",
@@ -193,7 +210,7 @@ function companyPerPlane() {
 }
 
 function planePerCompany() {
-    var companySelected = $("#jsInput").attr("data-val");
+    var companySelected = $("#company").attr("data-val");
     $.ajax({
         url: "./model.php",
         type: "POST",
@@ -266,13 +283,11 @@ function changeInfo(selectedLi) {
         case "CompanyPerPlane":
             p.html("Utilisation d'un avion suivant les différentes companies");
             break;
+        case "PlanePerCompany":
+            p.html("Avion(s) utilisé(s) par une companie");
+            break;
         default:
             p.html("Cas non implémenté");
             break;
     }
-}
-
-function changeInputValue(liName) {
-    $("#jsInput").html(liName);
-    $("#jsInput").attr("data-val",liName);
 }
