@@ -38,34 +38,36 @@ $(document).ready(function() {
     $("#submit").click(function () {
         var selectItem = $("#dataset").attr("data-val");
         $("#myChart").fadeOut();
-        $("#myChart").remove();
-        var newCanvas = $("<canvas>");
-        newCanvas.attr("id","myChart");
-        newCanvas.attr("height","200");
-        newCanvas.attr("style","display: none");
-        $("#canvasDiv").append(newCanvas);
-        switch(selectItem){
-            case "NbrVol":
-                numberFlyByAirline();
-                break;
-            case "PercentVol":
-                percentOfFlyByAirline();
-                break;
-            case "NbrPlaneVol":
-                numberFlyPerPlane();
-                break;
-            case "CompanyPerPlane":
-                companyPerPlane();
-                break;
-            case "PlanePerCompany":
-                planePerCompany();
-                break;
-            case "CancelFly":
-                cancelFly();
-                break;
-            default:
-                return;
-        }
+        setTimeout(function(){
+            $("#myChart").remove();
+            var newCanvas = $("<canvas>");
+            newCanvas.attr("id","myChart");
+            newCanvas.attr("height","200");
+            newCanvas.attr("style","display: none");
+            $("#canvasDiv").append(newCanvas);
+            switch(selectItem){
+                case "NbrVol":
+                    numberFlyByAirline();
+                    break;
+                case "PercentVol":
+                    percentOfFlyByAirline();
+                    break;
+                case "NbrPlaneVol":
+                    numberFlyPerPlane();
+                    break;
+                case "CompanyPerPlane":
+                    companyPerPlane();
+                    break;
+                case "PlanePerCompany":
+                    planePerCompany();
+                    break;
+                case "CancelFly":
+                    cancelFly();
+                    break;
+                default:
+                    return;
+            }
+        },500);
     })
 
     //Affichage d'un input si une deuxième entrée est attendue
