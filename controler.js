@@ -16,7 +16,7 @@ $(document).ready(function() {
                     td.html(result[i][j]);
                     tr.append(td);
                 }
-                $("#indexArrayBody").append(tr);
+                $(".tableData").append(tr);
             }
             
         },
