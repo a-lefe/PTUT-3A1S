@@ -1,6 +1,8 @@
 /**
  * Created by Epulapp on 05/10/2016.
  */
+var mode;
+var iterateur;
 $(document).ready(function() {
     $.ajax({
         url: "./model.php",
@@ -22,6 +24,8 @@ $(document).ready(function() {
             alert(result[0]);
         }
     });
+
+    initHiddenInput();
     numberFlyByAirline();
 
     //Selection des statistiques à afficher
@@ -32,9 +36,7 @@ $(document).ready(function() {
         var newCanvas = $("<canvas>");
         newCanvas.attr("id","myChart");
         newCanvas.attr("height","200");
-        //newCanvas.attr("style","visibility: hidden;");
         $("#canvasDiv").append(newCanvas);
-        //$("#myChart").clearRect(0, 0, $("#myChart").width, $("#myChart").height);
         switch(selectItem){
             case "NbrVol":
                 numberFlyByAirline();
@@ -45,58 +47,48 @@ $(document).ready(function() {
             case "NbrPlaneVol":
                 numberFlyPerPlane();
                 break;
+            case "CompanyPerPlane":
+                companyPerPlane();
+                break;
+            case "PlanePerCompany":
+                planePerCompany();
+                break;
             default:
                 return;
         }
     })
 
+    //Ajout d'un input si une deuxième entrée est attendue
     $("#dataset").change(function () {
         var selectItem = $("#dataset").attr("data-val");
         $("#jsDiv").remove();
-        if(selectItem == "CompaniePerPlane"){
-            $.ajax({
-                url: "./model.php",
-                type: "POST",
-                data: "queryToExecute=getPlane",
-                success: function (result) {
-                    var div = $("<div>");
-                    div.attr("class", "mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select");
-                    div.attr("id", "jsDiv");
+        if(selectItem == "CompanyPerPlane" || selectItem == "PlanePerCompany"){
 
-                    var input = $("<input>");
-                    input.attr("class", "mdl-textfield__input");
-                    input.attr("id", "jsInput");
-                    input.attr("type", "text");
-                    input.attr("readonly", "readonly");
-                    div.append(input);
-
-                    var label = $("<label>");
-                    label.attr("class", "mdl-textfield__label");
-                    label.attr("for", "jsInput");
-                    label.html("Choix Avion");
-                    div.append(label);
-
-                    var ul = $("<ul>");
-                    ul.attr("id", "selectPlane");
-                    ul.attr("class", "mdl-menu mdl-menu--bottom-left mdl-js-menu");
-                    ul.attr("for", "jsInput");
-
-                    for(var i = 0; i < result.length; ++i){
-                        var li = $("<li>");
-                        li.attr("class", "mdl-menu__item");
-                        li.attr("data-val", result[i][0]);
-                        li.html(result[i][0]);
-                        ul.append(li);
-                    }
-
-                    div.append(ul);
-                    div.insertAfter("#selectGraph");
-                }
-            })
         }
     })
 });
 
+function initHiddenInput() {
+    mode = [["getPlane", "planeUl"], ["getCompany", "companyUl"]];
+    for(iterateur = 0; iterateur < mode.length; ++iterateur) {
+        $.ajax({
+            url: "./model.php",
+            type: "POST",
+            data: "queryToExecute=" + mode[iterateur][0],
+            success: function (result) {
+                var ul = $("#"+ mode[iterateur][1]);
+                for (var j = 0; j < result.length; ++j) {
+                    var li = $("<li>");
+                    li.attr("class", "mdl-menu__item");
+                    li.attr("data-val", result[j][0]);
+                    //li.attr("onclick", "changeInputValue('" + result[j][0] + "')");
+                    li.html(result[j][0]);
+                    ul.append(li);
+                }
+            }
+        });
+    }
+}
 function numberFlyByAirline() {
     $.ajax({
         url: "./model.php",
@@ -173,6 +165,60 @@ function numberFlyPerPlane(){
     });
 }
 
+function companyPerPlane() {
+    var planeSelected = $("#jsInput").attr("data-val");
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=companyPerPlane&plane=" + planeSelected,
+        success: function (result) {
+            var labels = [];
+            var data = [];
+            var backgroundColor = [];
+            var borderColor = [];
+            var max = 0;
+            for(var i = 0; i < result.length; ++i){
+                labels.push(result[i][0]);
+                data.push(result[i][1]);
+                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
+                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
+                    + ',' + Math.floor((Math.random() * 223));
+                backgroundColor.push(color + ',0.2)');
+                borderColor.push(color + ', 1)');
+            }
+            createGraph(labels, "Utilisation de l'avion " + planeSelected, data, backgroundColor, borderColor,
+                "linear", max + (max/10), max/10);
+        }
+    });
+}
+
+function planePerCompany() {
+    var companySelected = $("#jsInput").attr("data-val");
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=planePerCompany&company=" + companySelected,
+        success: function (result) {
+            var labels = [];
+            var data = [];
+            var backgroundColor = [];
+            var borderColor = [];
+            var max = 0;
+            for(var i = 0; i < result.length; ++i){
+                labels.push(result[i][0]);
+                data.push(result[i][1]);
+                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
+                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
+                    + ',' + Math.floor((Math.random() * 223));
+                backgroundColor.push(color + ',0.2)');
+                borderColor.push(color + ', 1)');
+            }
+            createGraph(labels, "Utilisation des avions par " + companySelected, data, backgroundColor, borderColor,
+                "linear", max + (max/10), max/10);
+        }
+    });
+}
+
 function createGraph(labels, label, data, backgroundColor, borderColor, yType, max, stepSize){
     var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
@@ -204,20 +250,29 @@ function createGraph(labels, label, data, backgroundColor, borderColor, yType, m
     ctx.fadeIn("slow");
 }
 
+//Changer la légende pour expliquer les différents graphiques implémentés
 function changeInfo(selectedLi) {
     var p = $("#pInfo")
     switch(selectedLi){
         case "NbrVol":
-            p.html("Nombre de vol par companie");
+            p.html("Nombre de départ de l'aéroport pour chaque companie");
             break;
         case "PercentVol":
-            p.html("Pourcentage des vols par compagnie");
+            p.html("Pourcentage de tous les départs de l'aéroport par compagnie");
             break;
         case "NbrPlaneVol":
-            p.html("Nombre de vol par avion");
+            p.html("Nombre de départ de l'aéroport par avion");
+            break;
+        case "CompanyPerPlane":
+            p.html("Utilisation d'un avion suivant les différentes companies");
             break;
         default:
             p.html("Cas non implémenté");
             break;
     }
+}
+
+function changeInputValue(liName) {
+    $("#jsInput").html(liName);
+    $("#jsInput").attr("data-val",liName);
 }
