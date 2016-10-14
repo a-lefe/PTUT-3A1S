@@ -58,6 +58,11 @@ switch($queryToExecute){
         $sql->execute();
         $result = $sql->fetchAll();
         break;
+    case "terminalUse":
+        $sql = $pdo->prepare("SELECT airportresources_terminal, COUNT(*) FROM plane WHERE airportresources_terminal <> 'None' GROUP BY airportresources_terminal");
+        $sql->execute();
+        $result = $sql->fetchAll();
+        break;
     default:
         echo [];
 }

@@ -32,7 +32,7 @@ $(document).ready(function() {
     });
 
     initHiddenInput();
-    numberFlyByAirline();
+    getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
 
     //Selection des statistiques à afficher
     $("#submit").click(function () {
@@ -47,28 +47,35 @@ $(document).ready(function() {
             $("#canvasDiv").append(newCanvas);
             switch(selectItem){
                 case "NbrVol":
-                    numberFlyByAirline();
+                    getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
                     break;
                 case "PercentVol":
-                    percentOfFlyByAirline();
+                    getDBInfo("percentOfTotalFly", true, ["Pourcentage des vols"], "logarithmic");
                     break;
                 case "NbrPlaneVol":
-                    numberFlyPerPlane();
+                    getDBInfo("numberFlyByPlane", true, ["Nombre de vol"], "logarithmic");
                     break;
                 case "CompanyPerPlane":
-                    companyPerPlane();
+                    var planeSelected = $("#plane").attr("data-val");
+                    getDBInfo("companyPerPlane", false, ["Utilisation de l'avion " + planeSelected],
+                        "linear", "&plane=" + planeSelected);
                     break;
                 case "PlanePerCompany":
-                    planePerCompany();
+                    var companySelected = $("#company").attr("data-val");
+                    getDBInfo("planePerCompany", false, ["Utilisation des avions par " + companySelected],
+                        "linear", "&company=" + companySelected);
                     break;
                 case "CancelFly":
-                    cancelFly();
+                    getDBInfo("cancelFly", false, ["Vol annulé", "Vol total"], "logarithmic");
+                    break;
+                case "TerminalUse":
+                    getDBInfo("terminalUse", false, ["Utilisation des terminaux"], "linear");
                     break;
                 default:
                     return;
             }
         },500);
-    })
+    });
 
     //Affichage d'un input si une deuxième entrée est attendue
     $("#dataset").change(function () {
@@ -120,202 +127,64 @@ function initHiddenInput() {
         }
     });
 }
-function numberFlyByAirline() {
-    $.ajax({
-        url: "./model.php",
-        type: "POST",
-        data: "queryToExecute=numberFlyByAirline",
-        success: function (result) {
-            var labels = [];
-            var data = [];
-            var backgroundColor = [];
-            var borderColor = [];
-            var max = 0;
-            for(var i = 0; i < result.length; ++i){
-                labels.push(result[i][0]);
-                data.push(result[i][1]);
-                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
-                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
-                    + ',' + Math.floor((Math.random() * 223));
-                backgroundColor.push(color + ',0.2)');
-                borderColor.push(color + ', 1)');
-            }
-            createGraph(labels, "Nombre de vol", data, backgroundColor, borderColor,
-                "logarithmic", max + (max/10), max/10);
-        }
-    });
-}
 
-function percentOfFlyByAirline() {
+//Fonction executant les appels ajax
+function getDBInfo(queryToExecute, isPercent, graphLabel, yType, otherInput){
     $.ajax({
         url: "./model.php",
         type: "POST",
-        data: "queryToExecute=percentOfTotalFly",
+        data: "queryToExecute=" + queryToExecute + (otherInput != undefined?otherInput:""),
         success: function (result) {
-            var labels = [];
-            var data = [];
-            var backgroundColor = [];
-            var borderColor = [];
-            for(var i = 0; i < result.length; ++i){
-                labels.push(result[i][0]);
-                data.push(result[i][1]);
-                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
-                    + ',' + Math.floor((Math.random() * 223));
-                backgroundColor.push(color + ',0.2)');
-                borderColor.push(color + ', 1)');
-            }
-            createGraph(labels, "Pourcentage des vols", data, backgroundColor, borderColor,
-                'logarithmic', 100, 10);
-        }
-    });
-}
-
-function numberFlyPerPlane(){
-    $.ajax({
-        url: "./model.php",
-        type: "POST",
-        data : "queryToExecute=numberFlyByPlane",
-        success: function (result) {
-            var labels = [];
-            var data = [];
-            var backgroundColor = [];
-            var borderColor = [];
-            var max = 0;
-            for(var i = 0; i < result.length; ++i){
-                labels.push(result[i][0]);
-                data.push(result[i][1]);
-                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
-                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
-                    + ',' + Math.floor((Math.random() * 223));
-                backgroundColor.push(color + ',0.2)');
-                borderColor.push(color + ', 1)');
-            }
-            createGraph(labels, "Nombre de vol", data, backgroundColor, borderColor,
-                "logarithmic", max + (max/10), max/10);
-        }
-    });
-}
-
-function companyPerPlane() {
-    var planeSelected = $("#plane").attr("data-val");
-    $.ajax({
-        url: "./model.php",
-        type: "POST",
-        data: "queryToExecute=companyPerPlane&plane=" + planeSelected,
-        success: function (result) {
-            var labels = [];
-            var data = [];
-            var backgroundColor = [];
-            var borderColor = [];
-            var max = 0;
-            for(var i = 0; i < result.length; ++i){
-                labels.push(result[i][0]);
-                data.push(result[i][1]);
-                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
-                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
-                    + ',' + Math.floor((Math.random() * 223));
-                backgroundColor.push(color + ',0.2)');
-                borderColor.push(color + ', 1)');
-            }
-            createGraph(labels, "Utilisation de l'avion " + planeSelected, data, backgroundColor, borderColor,
-                "linear", max + (max/10), max/10);
-        }
-    });
-}
-
-function planePerCompany() {
-    var companySelected = $("#company").attr("data-val");
-    $.ajax({
-        url: "./model.php",
-        type: "POST",
-        data: "queryToExecute=planePerCompany&company=" + companySelected,
-        success: function (result) {
-            var labels = [];
-            var data = [];
-            var backgroundColor = [];
-            var borderColor = [];
-            var max = 0;
-            for(var i = 0; i < result.length; ++i){
-                labels.push(result[i][0]);
-                data.push(result[i][1]);
-                if(parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
-                var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
-                    + ',' + Math.floor((Math.random() * 223));
-                backgroundColor.push(color + ',0.2)');
-                borderColor.push(color + ', 1)');
-            }
-            createGraph(labels, "Utilisation des avions par " + companySelected, data, backgroundColor, borderColor,
-                "linear", max + (max/10), max/10);
-        }
-    });
-}
-
-function cancelFly() {
-    $.ajax({
-        url: "./model.php",
-        type: "POST",
-        data: "queryToExecute=cancelFly",
-        success: function (result) {
-            var labels = [];
-            var dataCancel = [];
-            var dataTotFly = [];
             var datasets = [];
+            var labels = [];
+            //Tableau du premier jeu de données
+            var dataOne = [];
+            //Tableau du second jeu de données
+            var dataTwo = [];
             var backgroundColor = [];
             var borderColor = [];
-            var max = 0;
+            //Valeur maximal calculé automatiquement ou mise à 100 si pourcentage)
+            var max = (isPercent?100:0);
+            //Permet de savoir combien de jeu de données on reçoit
+            var resultLength = (result[0][2] == undefined?2:3);
+
             for(var i = 0; i < result.length; ++i){
+                //Label de la donnée
                 labels.push(result[i][0]);
-                dataCancel.push(result[i][1]);
-                dataTotFly.push(result[i][2]);
-                if(parseInt(result[i][2]) > max) max = parseInt(result[i][2]);
+
+                //Valeur de la donnée
+                dataOne.push(result[i][1]);
+
+                //Si deux valeur, valeur de la deuxième donnée
+                if(resultLength > 2) dataTwo.push(result[i][2]);
+                if(!isPercent && parseInt(result[i][1]) > max) max = parseInt(result[i][1]);
+                if(!isPercent && resultLength > 2 && parseInt(result[i][2]) > max) max = parseInt(result[i][2]);
+                //Couleurs des graphs
                 var color = 'rgba(' + Math.floor((Math.random() * 223)) + ',' + Math.floor((Math.random() * 223))
                     + ',' + Math.floor((Math.random() * 223));
                 backgroundColor.push(color + ',0.2)');
                 borderColor.push(color + ', 1)');
             }
-            datasets.push({label : "Vol annulé", data: dataCancel, backgroundColor: backgroundColor,
+            //Rajoute un step, juste du visuel (le plus grand bâton ne touche pas le bord du graph
+            if(!isPercent) max += max/10;
+            datasets.push({label : graphLabel[0], data: dataOne, backgroundColor: backgroundColor,
                 borderColor: borderColor, borderWidth: 1});
-            datasets.push({label : "Vol total", data: dataTotFly, backgroundColor: backgroundColor,
-                borderColor: borderColor, borderWidth: 1});
-            var ctx = $("#myChart");
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            type: "logarithmic",
-                            ticks: {
-                                beginAtZero:true,
-                                min: 0,
-                                max: max + max/10,
-                                stepSize: max/10
-                            }
-                        }]
-                    }
-                }
-            });
-            ctx.fadeIn("slow");
+            if(resultLength > 2)
+                datasets.push({label : graphLabel[1], data: dataTwo, backgroundColor: backgroundColor,
+                    borderColor: borderColor, borderWidth: 1});
+            createGraph(labels, datasets, yType, max, max/10);
         }
     });
 }
 
-function createGraph(labels, label, data, backgroundColor, borderColor, yType, max, stepSize){
+//Fonction qui créer un graph et l'affiche
+function createGraph(labels, datasets, yType, max, stepSize){
     var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
-            datasets:[{
-                label: label,
-                data: data,
-                backgroundColor: backgroundColor,
-                borderColor: borderColor,
-                borderWidth: 1
-            }]
+            datasets: datasets
         },
         options: {
             scales: {
