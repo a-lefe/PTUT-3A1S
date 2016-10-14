@@ -28,14 +28,12 @@
 
     <meta name="theme-color" content="#2F3BA2">
 
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.red-orange.min.css">
+    <link rel="stylesheet" href="styles/mainStyle.css">
     <link rel="stylesheet" href="styles/material.style.css"/>
 
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/mdl-selectfield.min.css">
     <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/mdl-selectfield.min.css">
 
     <!-- Material Design icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -72,12 +70,12 @@
 
                         <div class="mdl-card__supporting-text">
                             <table id="indexArray" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
-                                <thead style="height : 35px; display : block;">
+                                <thead style="height : 35px; display : block; margin-bottom: 10px">
                                     <tr>
                                         <th class="mdl-data-table__cell--non-numeric" style="width : 71.2px">Référence</th>
                                         <th style="width : 144px">Destination</th>
                                         <th style="width : 165.6px">Compagnie</th>
-                                        <th style="width : 162.4px">Heure de départ</th>
+                                        <th style="width : 162.4px">Départ</th>
                                     </tr>
                                 </thead>
                                 <tbody class="tableData" style="overflow: auto; height : 300px; display : block;">
@@ -128,6 +126,8 @@
                                 <li class="mdl-menu__item" data-val="PlanePerCompany" onmouseover="changeInfo('PlanePerCompany')">Avion par companie</li>
                                 <li class="mdl-menu__item" data-val="CancelFly" onmouseover="changeInfo('CancelFly')">Vol(s) annulé(s)</li>
                                 <li class="mdl-menu__item" data-val="TerminalUse" onmouseover="changeInfo('TerminalUse')">Utilisation des terminaux</li>
+                                <li class="mdl-menu__item" data-val="ContryDeserv" onmouseover="changeInfo('ContryDeserv')">Pays desservis</li>
+                                <li class="mdl-menu__item" data-val="FlyDestination" onmouseover="changeInfo('FlyDestination')">Destination des vols</li>
                             </ul>
                         </div>
                         <div style="display: none;" id="selectPlane" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
@@ -163,7 +163,7 @@
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script src="js/Chart.js/Chart.js"></script>
 <script src="js/controler.js"></script>
-<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+<script src="./js/material.min.js"></script>
 <script src="js/mdl-selectfield.min.js"></script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

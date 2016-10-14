@@ -5,14 +5,14 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: application/json');
 
 
-$pdo = require_once('model/connect_mysql.php');
-//$pdo = require_once('model/connect_localhost.php');
+//$pdo = require_once('model/connect_mysql.php');
+$pdo = require_once('model/connect_localhost.php');
 $queryToExecute = $_POST['queryToExecute'];
 $result = null;
 
 switch($queryToExecute){
     case "indexArray":
-        $sql = $pdo->prepare("SELECT gid, flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC");
+        $sql = $pdo->prepare("SELECT gid, flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC LIMIT 0, 100");
         $sql->execute();
         $result = $sql->fetchAll();
         break;
@@ -60,6 +60,16 @@ switch($queryToExecute){
         break;
     case "terminalUse":
         $sql = $pdo->prepare("SELECT airportresources_terminal, COUNT(*) FROM plane WHERE airportresources_terminal <> 'None' GROUP BY airportresources_terminal");
+        $sql->execute();
+        $result = $sql->fetchAll();
+        break;
+    case "contryDeserv":
+        $sql = $pdo->prepare("SELECT countrytype_description, COUNT(*) FROM plane GROUP BY countrytype_description");
+        $sql->execute();
+        $result = $sql->fetchAll();
+        break;
+    case "flyDestination":
+        $sql = $pdo->prepare("SELECT airports_destination_name, COUNT(*) FROM plane GROUP BY airports_destination_name");
         $sql->execute();
         $result = $sql->fetchAll();
         break;

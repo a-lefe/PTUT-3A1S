@@ -11,7 +11,12 @@ $(document).ready(function() {
                 var tr = $("<tr>");
                 for(var j = 1; j < 5; ++j){
                     var td = $("<td>");
-                    td.html(result[i][j]);
+                    if(j == 4){
+                        var date = new Date(result[i][j].replace(" ","T"));
+                        td.html(date.toLocaleString("fr-FR"));
+                    }
+                    else
+                        td.html(result[i][j]);
                     tr.append(td);
                 }
                 tr.click(function(){
@@ -71,6 +76,12 @@ $(document).ready(function() {
                 case "TerminalUse":
                     getDBInfo("terminalUse", false, ["Utilisation des terminaux"], "linear");
                     break;
+                case "ContryDeserv":
+                    getDBInfo("contryDeserv", false, ["Nombre de vols dans ce type"], "linear");
+                    break;
+                case "FlyDestination":
+                    getDBInfo("flyDestination", false, ["Nombre de vol ayant desservi cette destination"], "logarithmic");
+                    break;
                 default:
                     return;
             }
@@ -92,6 +103,7 @@ $(document).ready(function() {
     })
 });
 
+//Initialiser les list avec les données récupérer en base
 function initHiddenInput() {
     var mode = [["getPlane", "planeUl"], ["getCompany", "companyUl"]];
     $.ajax({
@@ -224,6 +236,15 @@ function changeInfo(selectedLi) {
             break;
         case "CancelFly":
             p.html("Nombre de vol(s) annulé(s) par les companies");
+            break;
+        case "TerminalUse":
+            p.html("Nombre de vol partant des différents terminaux de l'aéroport");
+            break;
+        case "ContryDeserv":
+            p.html("Nombre de vol desservant les différents type de pays");
+            break;
+        case "FlyDestination":
+            p.html("Destination des vols partant de l'aéroport de Lyon");
             break;
         default:
             p.html("Cas non implémenté");
