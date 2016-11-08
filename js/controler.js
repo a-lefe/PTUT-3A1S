@@ -39,6 +39,24 @@ $(document).ready(function() {
     initHiddenInput();
     getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
 
+    //Initialiser le date picker
+    $( "#dateSelected" ).datepicker({
+        altField: "#dateSelected",
+        closeText: 'Fermer',
+        prevText: 'Précédent',
+        nextText: 'Suivant',
+        currentText: 'Aujourd\'hui',
+        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre',
+            'Novembre', 'Décembre'],
+        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.',
+            'Déc.'],
+        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+        weekHeader: 'Sem.',
+        dateFormat: 'dd/mm/yy'
+    });
+
     //Selection des statistiques à afficher
     $("#submit").click(function () {
         var selectItem = $("#dataset").attr("data-val");
@@ -164,10 +182,12 @@ function getDBInfo(queryToExecute, isPercent, graphLabel, yType, otherInput){
         data: "queryToExecute=" + queryToExecute + (otherInput != undefined?otherInput:""),
         success: function (result) {
             if(result.length == 0){
-                var ctx = $("#myChart").getContext("2d");
-                ctx.textAlign = "center";
-                ctx.fillText("Aucune information", 150, 120);
-                return;
+                var c = $("#myChart");
+                var ctx = c.getContext("2d");
+
+                ctx.font = "20px Georgia";
+                ctx.fillText("Hello World!", 10, 50);
+                c.fadeIn("slow");
             }
             var datasets = [];
             var labels = [];
