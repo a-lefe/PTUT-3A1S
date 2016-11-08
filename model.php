@@ -73,6 +73,13 @@ switch($queryToExecute){
         $sql->execute();
         $result = $sql->fetchAll();
         break;
+    case "dayFly":
+        $dateBegin = $_POST['dateBegin'];
+        $dateEnd = $_POST['dateEnd'];
+        $sql = $pdo->prepare("SELECT airlines_airline_name, COUNT(*) number from plane where timestamps_eobt BETWEEN ? and ? group by airlines_airline_name");
+        $sql->execute(array($dateBegin, $dateEnd));
+        $result = $sql->fetchAll();
+        break;
     default:
         echo [];
 }

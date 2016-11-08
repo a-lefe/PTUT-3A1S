@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
 // Connexion à la bdd
-$pdo = require_once('connect_mysql.php');
+$pdo = require_once('model/connect_mysql.php');
 // Récupération des données au format json
 $jsondata = file_get_contents('all_data.json');
 // Passage des données dans un tableau

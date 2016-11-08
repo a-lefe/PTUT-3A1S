@@ -43,13 +43,18 @@ $(document).ready(function() {
     $("#submit").click(function () {
         var selectItem = $("#dataset").attr("data-val");
         $("#myChart").fadeOut();
+
+        //Timeout permettant à l'animation de s'effectuer
         setTimeout(function(){
+            //Supression de l'ancien canvas pour en recréer un nouveau
             $("#myChart").remove();
             var newCanvas = $("<canvas>");
             newCanvas.attr("id","myChart");
             newCanvas.attr("height","200");
             newCanvas.attr("style","display: none");
             $("#canvasDiv").append(newCanvas);
+
+            //Récupérer les bonnes données en base en fonction de celle choisi
             switch(selectItem){
                 case "NbrVol":
                     getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
@@ -82,6 +87,13 @@ $(document).ready(function() {
                 case "FlyDestination":
                     getDBInfo("flyDestination", false, ["Nombre de vol ayant desservi cette destination"], "logarithmic");
                     break;
+                case "DayFly":
+                    var dateSelected = $("#dateSelected").val();
+                    var dateBegin = dateSelected + " 00:00:00";
+                    var dateEnd = dateSelected + " 23:59:59";
+                    getDBInfo("dayFly", false, ["Vol du " + dateSelected ] , "logarithmic", "&dateBegin=" + dateBegin
+                        + "&dateEnd=" + dateEnd);
+                    break;
                 default:
                     return;
             }
@@ -93,12 +105,16 @@ $(document).ready(function() {
         var selectItem = $("#dataset").attr("data-val");
         var selectPlane = $("#selectPlane");
         var selectCompany = $("#selectCompany");
+        var selectDate = $("#selectDate");
         selectPlane.hide();
         selectCompany.hide();
+        selectDate.hide();
         if(selectItem == "CompanyPerPlane")
             selectPlane.show();
         else if (selectItem == "PlanePerCompany")
             selectCompany.show();
+        else if(selectItem == "DayFly")
+            selectDate.show();
 
     })
 });
@@ -147,6 +163,12 @@ function getDBInfo(queryToExecute, isPercent, graphLabel, yType, otherInput){
         type: "POST",
         data: "queryToExecute=" + queryToExecute + (otherInput != undefined?otherInput:""),
         success: function (result) {
+            if(result.length == 0){
+                var ctx = $("#myChart").getContext("2d");
+                ctx.textAlign = "center";
+                ctx.fillText("Aucune information", 150, 120);
+                return;
+            }
             var datasets = [];
             var labels = [];
             //Tableau du premier jeu de données

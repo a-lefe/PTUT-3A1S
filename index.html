@@ -28,7 +28,7 @@
 
     <meta name="theme-color" content="#2F3BA2">
 
-    <link rel="stylesheet" href="styles/mainStyle.css">
+    <link rel="stylesheet" href="styles/section.css">
     <link rel="stylesheet" href="styles/material.style.css"/>
 
     <link rel="stylesheet" href="styles/main.css">
@@ -39,13 +39,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+<body class="mdl-main mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
                 <h3 class="mdl-layout-title">Départs de Lyon</h3>
                 <div class="mdl-layout-spacer">
-                    <img src="images/logo.png"/>
+                    <a style="cursor: hand" href="http://www.lyonaeroports.com/"><img src="images/logo.png"/></a>
                 </div>
             </div>
 
@@ -128,6 +128,7 @@
                                 <li class="mdl-menu__item" data-val="TerminalUse" onmouseover="changeInfo('TerminalUse')">Utilisation des terminaux</li>
                                 <li class="mdl-menu__item" data-val="ContryDeserv" onmouseover="changeInfo('ContryDeserv')">Pays desservis</li>
                                 <li class="mdl-menu__item" data-val="FlyDestination" onmouseover="changeInfo('FlyDestination')">Destination des vols</li>
+                                <li class="mdl-menu__item" data-val="DayFly" onmouseover="changeInfo('DayFly')">Vols du jour</li>
                             </ul>
                         </div>
                         <div style="display: none;" id="selectPlane" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
@@ -139,6 +140,10 @@
                             <input class="mdl-textfield__input" type="text" id="company" readonly/>
                             <label class="mdl-textfield__label" for="company">Choix Companie</label>
                             <ul style="overflow: auto; height: 350px" id="companyUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="company"></ul>
+                        </div>
+                        <div style="display: none;" id="selectDate" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                            <input class="mdl-textfield__input" type="text" id="dateSelected"/>
+                            <label class="mdl-textfield__label" for="dateSelected">Date</label>"
                         </div>
                         <br/>
                         <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Valider</button>
