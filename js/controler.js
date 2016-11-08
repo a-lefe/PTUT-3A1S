@@ -106,10 +106,16 @@ $(document).ready(function() {
                     getDBInfo("flyDestination", false, ["Nombre de vol ayant desservi cette destination"], "logarithmic");
                     break;
                 case "DayFly":
-                    var dateSelected = $("#dateSelected").val();
+                    var selectedDate = $("#dateSelected").val();
+                    var splitDate = selectedDate.split("/");
+                    var date = new Date(parseInt(splitDate[2]), parseInt(splitDate[1]), parseInt(splitDate[0]));
+                    var mm = date.getMonth(); // getMonth() is zero-based
+                    var dd = date.getDate();
+                    var dateSelected = [date.getFullYear(), (mm.toString().length == 1?'0' + mm:mm),
+                        (dd.toString().length == 1?'0' + dd:dd)].join('-');
                     var dateBegin = dateSelected + " 00:00:00";
                     var dateEnd = dateSelected + " 23:59:59";
-                    getDBInfo("dayFly", false, ["Vol du " + dateSelected ] , "logarithmic", "&dateBegin=" + dateBegin
+                    getDBInfo("dayFly", false, ["Vol du " + date.toLocaleDateString() ] , "logarithmic", "&dateBegin=" + dateBegin
                         + "&dateEnd=" + dateEnd);
                     break;
                 default:
@@ -182,12 +188,13 @@ function getDBInfo(queryToExecute, isPercent, graphLabel, yType, otherInput){
         data: "queryToExecute=" + queryToExecute + (otherInput != undefined?otherInput:""),
         success: function (result) {
             if(result.length == 0){
-                var c = $("#myChart");
+                var c= document.getElementById("myChart");
                 var ctx = c.getContext("2d");
-
-                ctx.font = "20px Georgia";
-                ctx.fillText("Hello World!", 10, 50);
-                c.fadeIn("slow");
+                ctx.textAlign="center";
+                ctx.font = "20px Roboto";
+                ctx.fillText("Aucunes donnée disponible", c.width/2, c.height/2);
+                $("#myChart").fadeIn("slow");
+                return;
             }
             var datasets = [];
             var labels = [];
@@ -227,6 +234,14 @@ function getDBInfo(queryToExecute, isPercent, graphLabel, yType, otherInput){
                 datasets.push({label : graphLabel[1], data: dataTwo, backgroundColor: backgroundColor,
                     borderColor: borderColor, borderWidth: 1});
             createGraph(labels, datasets, yType, max, max/10);
+        },
+        error:function () {
+            var c= document.getElementById("myChart");
+            var ctx = c.getContext("2d");
+            ctx.font = "20px Helvetica";
+            ctx.textAlign="center";
+            ctx.fillText("Aucunes donnée disponible", c.width, c.height);
+            $("#myChart").fadeIn("slow");
         }
     });
 }
