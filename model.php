@@ -80,6 +80,12 @@ switch($queryToExecute){
         $sql->execute(array($dateBegin, $dateEnd));
         $result = $sql->fetchAll();
         break;
+    case "flyDetails":
+        $gid = $_POST['gid'];
+        $sql = $pdo->prepare("SELECT flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt, airportresources_terminal FROM plane WHERE gid=".$gid);
+        $sql->execute();
+        $result = $sql->fetch();
+        break;
     default:
         echo [];
 }

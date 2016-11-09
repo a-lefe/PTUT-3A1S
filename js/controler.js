@@ -8,7 +8,8 @@ $(document).ready(function() {
         data: "queryToExecute=indexArray",
         success: function (result) {
             for(var i = 0; i < result.length; ++i){
-                var tr = $("<tr>");
+                var gid = result[i][0];
+                var tr = $("<tr value=\""+gid+"\">");
                 for(var j = 1; j < 5; ++j){
                     var td = $("<td>");
                     if(j == 4){
@@ -20,16 +21,53 @@ $(document).ready(function() {
                     tr.append(td);
                 }
                 tr.click(function(){
+                    if($(".dialog").length){
+                        $(".dialog").remove();
+                    }
                     $("body").append("<div class=\"dialog\" title=\"Informations supplémentaires\">");
                     $(".dialog").dialog({
-                        width : 400,
+                        width : 'auto',
+                        height : 'auto',
                         close : function(){$(".dialog").remove()}
                     });
-                    $(".dialog").dialog("open");
+                    $.ajax({
+                        url: "./model.php",
+                        type: "POST",
+                        data: {'queryToExecute' : 'flyDetails', 'gid' : $(this).attr('value')},
+                        success: function(result){
+                            var trBis = $("<tr>");
+                            for(var j = 0; j < 5; ++j){
+                                var td = $("<td>");
+                                console.log(result[j]);
+                                if(j == 3){
+                                    console.log(result[j]);
+                                    var date = new Date(result[j].replace(" ","T"));
+                                    td.html(date.toLocaleString("fr-FR"));
+                                }
+                                else
+                                    td.html(result[j]);
+                                trBis.append(td);
+                            }
+                            $(".dialog").append("<table class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\">"+
+                                                    "<thead>"+
+                                                        "<tr>"+
+                                                            "<th class=\"mdl-data-table__cell--non-numeric\">Référence</th>"+
+                                                            "<th>Destination</th>"+
+                                                            "<th>Compagnie</th>"+
+                                                            "<th>Heure de départ</th>"+
+                                                            "<th>Terminal</th>"+
+                                                        "</tr>"+
+                                                    "</thead>"+
+                                                    "<tbody class=\"tableDataZoom\">"+
+                                                    "</tbody>"+
+                                                "</table>");
+                            $('.tableDataZoom').append(trBis);
+                            $(".dialog").dialog("open");
+                        }
+                    });    
                 });
                 $(".tableData").append(tr);
-            }
-            
+            }  
         },
         error: function (result) {
             alert(result[0]);
