@@ -76,7 +76,7 @@ switch($queryToExecute){
     case "dayFly":
         $dateBegin = $_POST['dateBegin'];
         $dateEnd = $_POST['dateEnd'];
-        $sql = $pdo->prepare("SELECT airlines_airline_name, COUNT(*) number from plane where timestamps_eobt BETWEEN ? and ? group by airlines_airline_name");
+        $sql = $pdo->prepare("SELECT airlines_airline_name, COUNT(*) number from plane where timestamps_sobt BETWEEN ? and ? group by airlines_airline_name");
         $sql->execute(array($dateBegin, $dateEnd));
         $result = $sql->fetchAll();
         break;
@@ -87,7 +87,10 @@ switch($queryToExecute){
         $result = $sql->fetch();
         break;
     default:
-        echo [];
+        $sql = $pdo->prepare("SELECT gid, flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC");
+        $sql->execute();
+        $result = $sql->fetchAll();
+        break;
 }
 if(!is_array($result))
     $result = array("message" => "Une erreur est survenue lors de la connection à la base...", "success" => false);

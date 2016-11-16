@@ -35,6 +35,8 @@
     <link rel="stylesheet" href="styles/mdl-selectfield.min.css">
     <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="styles/selectStyle.css">
+    <link rel="stylesheet" href="styles/dataTable.css">
 
     <!-- Material Design icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -53,6 +55,8 @@
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
                 <a href="#overview" class="mdl-layout__tab is-active">Vols</a>
                 <a href="#features" class="mdl-layout__tab">Statistiques</a>
+                <a href="#allFly" class="mdl-layout__tab">Tous les vols</a>
+                <a href="#aboutUs" class="mdl-layout__tab">Le projet</a>
             </div>
         </header>
 
@@ -84,7 +88,7 @@
                             </table>
                         </div>
                         <div class="mdl-card__actions">
-                            <a href="#" class="mdl-layout__tab">Voir tous les vols</a>
+                            <a href="#allFly" class="mdl-layout__tab">Voir tous les vols</a>
                         </div>
                     </div>
                 </section>
@@ -119,7 +123,7 @@
                         <div id="selectGraph" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                             <input class="mdl-textfield__input" type="text" id="dataset" readonly/>
                             <label class="mdl-textfield__label" for="dataset">Choix Graphique</label>
-                            <ul id="selectStat" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="dataset">
+                            <ul style="height: 300px; overflow: auto;" id="selectStat" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="dataset">
                                 <li class="mdl-menu__item" data-val="NbrVol" onmouseover="changeInfo('NbrVol')">Vol des companies</li>
                                 <li class="mdl-menu__item" data-val="PercentVol" onmouseover="changeInfo('PercentVol')">% de vol des companies</li>
                                 <li class="mdl-menu__item" data-val="NbrPlaneVol" onmouseover="changeInfo('NbrPlaneVol')">Vol des avions</li>
@@ -144,12 +148,27 @@
                         </div>
                         <div style="display: none;" id="selectDate" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                             <input class="mdl-textfield__input" type="text" id="dateSelected" placeholder="Date" readonly/>
-
                         </div>
                         <br/>
                         <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Valider</button>
                     </div>
                 </section>
+            </div>
+            <div class="mdl-layout__tab-panel" id="allFly">
+                <table id="flyTable">
+                    <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Destination</th>
+                            <th>Compagnie</th>
+                            <th>Départ</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="mdl-layout__tab-panel" id="aboutUs">
+                <p>TODO</p>
             </div>
 
             <footer class="mdl-mini-footer">
@@ -167,12 +186,14 @@
 
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script src="js/dataTable.js"></script>
 <script src="js/Chart.js/Chart.js"></script>
 <script src="js/controler.js"></script>
 <script src="./js/material.min.js"></script>
 <script src="js/mdl-selectfield.min.js"></script>
+<script src="http://getmdl-select.min.css.map"></script>
 
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -70,7 +70,21 @@ $(document).ready(function() {
             }  
         },
         error: function (result) {
-            alert(result[0]);
+            alert(result[0]);//To change
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "./model.php",
+        contentType: "application/json; charset=utf-8",
+        data: "queryToExecute=allFly",
+        success: function (result) {
+            $("#flyTable").DataTable({
+                data: result
+            });
+        },
+        error : function (result) {
+            $("#flyTable").DataTable();
         }
     });
 
@@ -160,6 +174,7 @@ $(document).ready(function() {
                     return;
             }
         },500);
+
     });
 
     //Affichage d'un input si une deuxième entrée est attendue
@@ -184,6 +199,7 @@ $(document).ready(function() {
 //Initialiser les list avec les données récupérer en base
 function initHiddenInput() {
     var mode = [["getPlane", "planeUl"], ["getCompany", "companyUl"]];
+
     $.ajax({
         url: "./model.php",
         type: "POST",
@@ -194,7 +210,6 @@ function initHiddenInput() {
                 var li = $("<li>");
                 li.attr("class", "mdl-menu__item");
                 li.attr("data-val", result[j][0]);
-                //li.attr("onclick", "changeInputValue('" + result[j][0] + "')");
                 li.html(result[j][0]);
                 ul.append(li);
             }
@@ -210,7 +225,6 @@ function initHiddenInput() {
                 var li = $("<li>");
                 li.attr("class", "mdl-menu__item");
                 li.attr("data-val", result[j][0]);
-                //li.attr("onclick", "changeInputValue('" + result[j][0] + "')");
                 li.html(result[j][0]);
                 ul.append(li);
             }
@@ -312,7 +326,7 @@ function createGraph(labels, datasets, yType, max, stepSize){
 
 //Changer la légende pour expliquer les différents graphiques implémentés
 function changeInfo(selectedLi) {
-    var p = $("#pInfo")
+    var p = $("#pInfo");
     switch(selectedLi){
         case "NbrVol":
             p.html("Nombre de départ de l'aéroport pour chaque companie");
@@ -340,6 +354,9 @@ function changeInfo(selectedLi) {
             break;
         case "FlyDestination":
             p.html("Destination des vols partant de l'aéroport de Lyon");
+            break;
+        case "DayFly":
+            p.html("Nombre de vol par compagnie pour un jour donné");
             break;
         default:
             p.html("Cas non implémenté");
