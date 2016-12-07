@@ -73,31 +73,31 @@ $(document).ready(function() {
             alert(result[0]);//To change
         }
     });
-    // $.ajax({
-    //     type: "POST",
-    //     url: "./model.php",
-    //     data: "queryToExecute=allFly",
-    //     success: function (result) {
-    //         var tableBody = $("<tbody>");
-    //         for(var i = 0; i < result.length; ++i){
-    //             var tr = $("<tr>");
-    //             for(var j = 0; j < result[i].length; ++j){
-    //                 var td = $("<td>");
-    //                 td.text(result[i][j]);
-    //                 tr.append(td);
-    //             }
-    //             tableBody.append(tr);
-    //         }
-    //         //$("#flyTable").append(tableBody);
-    //         $("#flyTable").DataTable();
-    //     },
-    //     error : function (result) {
-    //         $("#flyTable").DataTable();
-    //     }
-    // });
-    $("#flyTable").DataTable({
-
+    $.ajax({
+        type: "POST",
+        url: "./model.php",
+        data: "queryToExecute=allFly",
+        success: function (result) {
+            var tableBody = $("<tbody>");
+            for(var i = 0; i < result.length; ++i){
+                var tr = $("<tr>");
+                for(var j = 0; j < 4; ++j){
+                    var td = $("<td>");
+                    td.text(result[i][j]);
+                    tr.append(td);
+                }
+                tableBody.append(tr);
+            }
+            $("#flyTable").append(tableBody);
+            $("#flyTable").DataTable();
+        },
+        error : function (result) {
+            $("#flyTable").DataTable();
+        }
     });
+    // $("#flyTable").DataTable({
+    //
+    // });
     initHiddenInput();
     getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
 

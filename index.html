@@ -36,7 +36,8 @@
     <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="styles/selectStyle.css">
-    <link rel="stylesheet" href="styles/dataTable.css">
+    <!--<link rel="stylesheet" href="styles/dataTable.css">-->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
 
     <!-- Material Design icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -53,7 +54,7 @@
             </div>
 
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-                <a href="#overview" class="mdl-layout__tab is-active">Vols</a>
+                <a href="#overview" class="mdl-layout__tab is-active">Accueil</a>
                 <a href="#features" class="mdl-layout__tab">Statistiques</a>
                 <a href="#allFly" class="mdl-layout__tab">Tous les vols</a>
                 <a href="#aboutUs" class="mdl-layout__tab">Le projet</a>
@@ -164,7 +165,7 @@
 
             <!-- Section Tous les vols -->
             <div class="mdl-layout__tab-panel" id="allFly">
-                <table id="flyTable">
+                <table id="flyTable" class="display" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>Référence</th>
@@ -173,15 +174,6 @@
                             <th>Départ</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
-                    </tbody>
                 </table>
             </div>
 
@@ -247,7 +239,7 @@
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'Départ de Lyon', 'auto');
+    ga('create', 'http://polytech3a.alwaysdata.net/', 'auto');
     ga('send', 'pageview');
 </script>
 </html>
