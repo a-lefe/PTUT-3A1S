@@ -61,6 +61,8 @@
         </header>
 
         <main class="mdl-layout__content">
+
+            <!-- Section Page d'acceuil -->
             <div class="mdl-layout__tab-panel is-active" id="overview">
                 <center><h3>Vols en temps réel au départ de Lyon</h3></center>
                 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -111,6 +113,7 @@
                 </section>
             </div>
 
+            <!-- Section Statistique -->
             <div class="mdl-layout__tab-panel" id="features">
                 <section style="height: 800px" class="mdl-grid">
                     <div id="canvasDiv" class="mdl-cell mdl-cell--8-col">
@@ -139,12 +142,16 @@
                         <div style="display: none;" id="selectPlane" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                             <input class="mdl-textfield__input" type="text" id="plane" readonly/>
                             <label class="mdl-textfield__label" for="plane">Choix Avion</label>
-                            <ul style="overflow: auto; height: 350px" id="planeUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="plane"></ul>
+                            <ul style="overflow: auto; height: 350px" id="planeUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="plane">
+                                <li class="mdl-menu__item">Selectionner l'avion</li>
+                            </ul>
                         </div>
                         <div style="display: none;" id="selectCompany" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                             <input class="mdl-textfield__input" type="text" id="company" readonly/>
                             <label class="mdl-textfield__label" for="company">Choix Companie</label>
-                            <ul style="overflow: auto; height: 350px" id="companyUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="company"></ul>
+                            <ul style="overflow: auto; height: 350px" id="companyUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="company">
+                                <li class="mdl-menu__item">Selectionner la companie</li>
+                            </ul>
                         </div>
                         <div style="display: none;" id="selectDate" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                             <input class="mdl-textfield__input" type="text" id="dateSelected" placeholder="Date" readonly/>
@@ -154,6 +161,8 @@
                     </div>
                 </section>
             </div>
+
+            <!-- Section Tous les vols -->
             <div class="mdl-layout__tab-panel" id="allFly">
                 <table id="flyTable">
                     <thead>
@@ -164,9 +173,19 @@
                             <th>Départ</th>
                         </tr>
                     </thead>
+                    <tbody>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    <tr><td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+                    </tbody>
                 </table>
             </div>
 
+            <!-- Section projet -->
             <div class="mdl-layout__tab-panel" id="aboutUs">
                 <p>TODO</p>
             </div>

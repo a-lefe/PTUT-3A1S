@@ -16,6 +16,11 @@ switch($queryToExecute){
         $sql->execute();
         $result = $sql->fetchAll();
         break;
+    case "allFly":
+        $sql = $pdo->prepare("SELECT flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC");
+        $sql->execute();
+        $result = $sql->fetchAll();
+        break;
     case "numberFlyByAirline":
         $sql = $pdo->prepare("SELECT airlines_airline_name, COUNT(*) FROM plane GROUP BY airlines_airline_name");
         $sql->execute();
@@ -87,9 +92,7 @@ switch($queryToExecute){
         $result = $sql->fetch();
         break;
     default:
-        $sql = $pdo->prepare("SELECT gid, flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt FROM plane ORDER BY timestamps_sobt DESC");
-        $sql->execute();
-        $result = $sql->fetchAll();
+        echo [];
         break;
 }
 if(!is_array($result))
