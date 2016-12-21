@@ -83,7 +83,12 @@ $(document).ready(function() {
                 var tr = $("<tr>");
                 for(var j = 0; j < 4; ++j){
                     var td = $("<td>");
-                    td.text(result[i][j]);
+                    if(j == 3){
+                        var date = new Date(result[i][3].replace(" ","T"));
+                        td.html(date.toLocaleString("fr-FR"));
+                    }
+                    else
+                        td.html(result[i][j]);
                     tr.append(td);
                 }
                 tableBody.append(tr);
@@ -120,72 +125,6 @@ $(document).ready(function() {
     });
 
     //Selection des statistiques à afficher
-    $("#submit").click(function () {
-        var selectItem = $("#dataset").attr("data-val");
-        $("#myChart").fadeOut();
-
-        //Timeout permettant à l'animation de s'effectuer
-        setTimeout(function(){
-            //Supression de l'ancien canvas pour en recréer un nouveau
-            $("#myChart").remove();
-            var newCanvas = $("<canvas>");
-            newCanvas.attr("id","myChart");
-            newCanvas.attr("height","200");
-            newCanvas.attr("style","display: none");
-            $("#canvasDiv").append(newCanvas);
-
-            //Récupérer les bonnes données en base en fonction de celle choisi
-            switch(selectItem){
-                case "NbrVol":
-                    getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
-                    break;
-                case "PercentVol":
-                    getDBInfo("percentOfTotalFly", true, ["Pourcentage des vols"], "logarithmic");
-                    break;
-                case "NbrPlaneVol":
-                    getDBInfo("numberFlyByPlane", true, ["Nombre de vol"], "logarithmic");
-                    break;
-                case "CompanyPerPlane":
-                    var planeSelected = $("#plane").attr("data-val");
-                    getDBInfo("companyPerPlane", false, ["Utilisation de l'avion " + planeSelected],
-                        "linear", "&plane=" + planeSelected);
-                    break;
-                case "PlanePerCompany":
-                    var companySelected = $("#company").attr("data-val");
-                    getDBInfo("planePerCompany", false, ["Utilisation des avions par " + companySelected],
-                        "linear", "&company=" + companySelected);
-                    break;
-                case "CancelFly":
-                    getDBInfo("cancelFly", false, ["Vol annulé", "Vol total"], "logarithmic");
-                    break;
-                case "TerminalUse":
-                    getDBInfo("terminalUse", false, ["Utilisation des terminaux"], "linear");
-                    break;
-                case "ContryDeserv":
-                    getDBInfo("contryDeserv", false, ["Nombre de vols dans ce type"], "linear");
-                    break;
-                case "FlyDestination":
-                    getDBInfo("flyDestination", false, ["Nombre de vol ayant desservi cette destination"], "logarithmic");
-                    break;
-                case "DayFly":
-                    var selectedDate = $("#dateSelected").val();
-                    var splitDate = selectedDate.split("/");
-                    var date = new Date(parseInt(splitDate[2]), parseInt(splitDate[1]), parseInt(splitDate[0]));
-                    var mm = date.getMonth(); // getMonth() is zero-based
-                    var dd = date.getDate();
-                    var dateSelected = [date.getFullYear(), (mm.toString().length == 1?'0' + mm:mm),
-                        (dd.toString().length == 1?'0' + dd:dd)].join('-');
-                    var dateBegin = dateSelected + " 00:00:00";
-                    var dateEnd = dateSelected + " 23:59:59";
-                    getDBInfo("dayFly", false, ["Vol du " + date.toLocaleDateString() ] , "logarithmic", "&dateBegin=" + dateBegin
-                        + "&dateEnd=" + dateEnd);
-                    break;
-                default:
-                    return;
-            }
-        },500);
-
-    });
 
     //Affichage d'un input si une deuxième entrée est attendue
     $("#dataset").change(function () {
@@ -206,6 +145,83 @@ $(document).ready(function() {
     })
 });
 
+function initGraph(selectItem) {
+    $("#myChart").fadeOut();
+
+    //Timeout permettant à l'animation de s'effectuer
+    setTimeout(function(){
+        //Supression de l'ancien canvas pour en recréer un nouveau
+        $("#myChart").remove();
+        var newCanvas = $("<canvas>");
+        newCanvas.attr("id","myChart");
+        newCanvas.attr("height","200");
+        newCanvas.attr("style","display: none");
+        $("#canvasDiv").append(newCanvas);
+        var selectPlane = $("#selectPlane");
+        var selectCompany = $("#selectCompany");
+        var selectDate = $("#selectDate");
+        selectPlane.hide();
+        selectCompany.hide();
+        selectDate.hide();
+        if(selectItem == "CompanyPerPlane")
+            selectPlane.fadeIn();
+        else if (selectItem == "PlanePerCompany")
+            selectCompany.fadeIn();
+        else if(selectItem == "DayFly")
+            selectDate.fadeIn();
+
+        //Récupérer les bonnes données en base en fonction de celle choisi
+        switch(selectItem){
+            case "NbrVol":
+                getDBInfo("numberFlyByAirline", false, ["Nombre de vol"], "logarithmic");
+                break;
+            case "PercentVol":
+                getDBInfo("percentOfTotalFly", true, ["Pourcentage des vols"], "logarithmic");
+                break;
+            case "NbrPlaneVol":
+                getDBInfo("numberFlyByPlane", true, ["Nombre de vol"], "logarithmic");
+                break;
+            case "CompanyPerPlane":
+                var planeSelected = $("#plane").attr("data-val");
+                getDBInfo("companyPerPlane", false, ["Utilisation de l'avion " + planeSelected],
+                    "linear", "&plane=" + planeSelected);
+                break;
+            case "PlanePerCompany":
+                var companySelected = $("#company").attr("data-val");
+                getDBInfo("planePerCompany", false, ["Utilisation des avions par " + companySelected],
+                    "linear", "&company=" + companySelected);
+                break;
+            case "CancelFly":
+                getDBInfo("cancelFly", false, ["Vol annulé", "Vol total"], "logarithmic");
+                break;
+            case "TerminalUse":
+                getDBInfo("terminalUse", false, ["Utilisation des terminaux"], "linear");
+                break;
+            case "ContryDeserv":
+                getDBInfo("contryDeserv", false, ["Nombre de vols dans ce type"], "linear");
+                break;
+            case "FlyDestination":
+                getDBInfo("flyDestination", false, ["Nombre de vol ayant desservi cette destination"], "logarithmic");
+                break;
+            case "DayFly":
+                var selectedDate = $("#dateSelected").val();
+                var splitDate = selectedDate.split("/");
+                var date = new Date(parseInt(splitDate[2]), parseInt(splitDate[1]), parseInt(splitDate[0]));
+                var mm = date.getMonth(); // getMonth() is zero-based
+                var dd = date.getDate();
+                var dateSelected = [date.getFullYear(), (mm.toString().length == 1?'0' + mm:mm),
+                    (dd.toString().length == 1?'0' + dd:dd)].join('-');
+                var dateBegin = dateSelected + " 00:00:00";
+                var dateEnd = dateSelected + " 23:59:59";
+                getDBInfo("dayFly", false, ["Vol du " + date.toLocaleDateString() ] , "logarithmic", "&dateBegin=" + dateBegin
+                    + "&dateEnd=" + dateEnd);
+                break;
+            default:
+                return;
+        }
+    },500);
+}
+
 //Initialiser les list avec les données récupérer en base
 function initHiddenInput() {
     var mode = [["getPlane", "planeUl"], ["getCompany", "companyUl"]];
@@ -215,13 +231,11 @@ function initHiddenInput() {
         type: "POST",
         data: "queryToExecute=" + mode[0][0],
         success: function (result) {
-            var ul = $("#"+ mode[0][1]);
+            var planeSelector = $("#selectPlane");
             for (var j = 0; j < result.length; ++j) {
-                var li = $("<li>");
-                li.attr("class", "mdl-menu__item");
-                li.attr("data-val", result[j][0]);
-                li.html(result[j][0]);
-                ul.append(li);
+                planeSelector.append($('<option>', {
+                    text: result[j][0]
+                }));
             }
         }
     });
@@ -230,13 +244,11 @@ function initHiddenInput() {
         type: "POST",
         data: "queryToExecute=" + mode[1][0],
         success: function (result) {
-            var ul = $("#"+ mode[1][1]);
+            var planeSelector = $("#selectCompany");
             for (var j = 0; j < result.length; ++j) {
-                var li = $("<li>");
-                li.attr("class", "mdl-menu__item");
-                li.attr("data-val", result[j][0]);
-                li.html(result[j][0]);
-                ul.append(li);
+                planeSelector.append($('<option>', {
+                    text: result[j][0]
+                }));
             }
         }
     });

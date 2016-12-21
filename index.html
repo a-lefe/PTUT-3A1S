@@ -117,49 +117,51 @@
             <!-- Section Statistique -->
             <div class="mdl-layout__tab-panel" id="features">
                 <section style="height: 800px" class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col" style="height: 100%;overflow: auto">
+                        <ul class="tab">
+                            <li title="Nombre de départ de l'aéroport pour chaque companie"><a href="javascript:void(0)" class="tablinks" onclick="initGraph('NbrVol')">Vol des companies</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('PercentVol')">% de vol des companies</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('NbrPlaneVol')">Vol des avions</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('CompanyPerPlane')">Companie par avions</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('PlanePerCompany')">Avion par companie</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('CancelFly')">Vol(s) annulé(s)</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('TerminalUse')">Utilisation des terminaux</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('ContryDeserv')">Pays desservis</a></li>
+                            <li title=""><a href="javascript:void(0)" class="tablinks" onclick="initGraph('FlyDestination')">Destination des vols</a></li>
+                        </ul>
+                        <!--<p id="pInfo" style="height: 50px">-->
+                        <!--Selectionnez les statistiques que vous souhaitez-->
+                        <!--</p>-->
+                        <!--<div id="selectGraph" class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label getmdl-select">-->
+                        <!--<input class="mdl-textfield__input" type="text" id="dataset" readonly/>-->
+                        <!--<label class="mdl-textfield__label" for="dataset">Choix Graphique</label>-->
+                        <!--<ul style="height: 300px; overflow: auto;" id="selectStat" class="mdl-menu mdl-menu&#45;&#45;bottom-left mdl-js-menu" for="dataset">-->
+                        <!--<li class="mdl-menu__item" data-val="NbrVol" onmouseover="changeInfo('NbrVol')">Vol des companies</li>-->
+                        <!--<li class="mdl-menu__item" data-val="PercentVol" onmouseover="changeInfo('PercentVol')">% de vol des companies</li>-->
+                        <!--<li class="mdl-menu__item" data-val="NbrPlaneVol" onmouseover="changeInfo('NbrPlaneVol')">Vol des avions</li>-->
+                        <!--<li class="mdl-menu__item" data-val="CompanyPerPlane" onmouseover="changeInfo('CompanyPerPlane')">Companie par avions</li>-->
+                        <!--<li class="mdl-menu__item" data-val="PlanePerCompany" onmouseover="changeInfo('PlanePerCompany')">Avion par companie</li>-->
+                        <!--<li class="mdl-menu__item" data-val="CancelFly" onmouseover="changeInfo('CancelFly')">Vol(s) annulé(s)</li>-->
+                        <!--<li class="mdl-menu__item" data-val="TerminalUse" onmouseover="changeInfo('TerminalUse')">Utilisation des terminaux</li>-->
+                        <!--<li class="mdl-menu__item" data-val="ContryDeserv" onmouseover="changeInfo('ContryDeserv')">Pays desservis</li>-->
+                        <!--<li class="mdl-menu__item" data-val="FlyDestination" onmouseover="changeInfo('FlyDestination')">Destination des vols</li>-->
+                        <!--<li class="mdl-menu__item" data-val="DayFly" onmouseover="changeInfo('DayFly')">Vols du jour</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <!--<br/>-->
+                        <!--<button id="submit" class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;accent">Valider</button>-->
+                    </div>
                     <div id="canvasDiv" class="mdl-cell mdl-cell--8-col">
-                    <canvas id="myChart" height="200"></canvas>
+                        <div style="width: 100%">
+                            <select id="selectPlane" style="display: none;"></select>
+                            <select id="selectCompany" style="display: none;"></select>
+                            <div style="display: none;" id="selectDate" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                                <input class="mdl-textfield__input" type="text" id="dateSelected" placeholder="Date" readonly/>
+                            </div>
+                        </div>
+                        <canvas id="myChart" height="200"></canvas>
                     </div>
-                    <div class="mdl-cell mdl-cell--2-col">
-                        <p id="pInfo" style="height: 50px">
-                            Selectionnez les statistiques que vous souhaitez
-                        </p>
-                        <div id="selectGraph" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                            <input class="mdl-textfield__input" type="text" id="dataset" readonly/>
-                            <label class="mdl-textfield__label" for="dataset">Choix Graphique</label>
-                            <ul style="height: 300px; overflow: auto;" id="selectStat" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="dataset">
-                                <li class="mdl-menu__item" data-val="NbrVol" onmouseover="changeInfo('NbrVol')">Vol des companies</li>
-                                <li class="mdl-menu__item" data-val="PercentVol" onmouseover="changeInfo('PercentVol')">% de vol des companies</li>
-                                <li class="mdl-menu__item" data-val="NbrPlaneVol" onmouseover="changeInfo('NbrPlaneVol')">Vol des avions</li>
-                                <li class="mdl-menu__item" data-val="CompanyPerPlane" onmouseover="changeInfo('CompanyPerPlane')">Companie par avions</li>
-                                <li class="mdl-menu__item" data-val="PlanePerCompany" onmouseover="changeInfo('PlanePerCompany')">Avion par companie</li>
-                                <li class="mdl-menu__item" data-val="CancelFly" onmouseover="changeInfo('CancelFly')">Vol(s) annulé(s)</li>
-                                <li class="mdl-menu__item" data-val="TerminalUse" onmouseover="changeInfo('TerminalUse')">Utilisation des terminaux</li>
-                                <li class="mdl-menu__item" data-val="ContryDeserv" onmouseover="changeInfo('ContryDeserv')">Pays desservis</li>
-                                <li class="mdl-menu__item" data-val="FlyDestination" onmouseover="changeInfo('FlyDestination')">Destination des vols</li>
-                                <li class="mdl-menu__item" data-val="DayFly" onmouseover="changeInfo('DayFly')">Vols du jour</li>
-                            </ul>
-                        </div>
-                        <div style="display: none;" id="selectPlane" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                            <input class="mdl-textfield__input" type="text" id="plane" readonly/>
-                            <label class="mdl-textfield__label" for="plane">Choix Avion</label>
-                            <ul style="overflow: auto; height: 350px" id="planeUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="plane">
-                                <li class="mdl-menu__item">Selectionner l'avion</li>
-                            </ul>
-                        </div>
-                        <div style="display: none;" id="selectCompany" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                            <input class="mdl-textfield__input" type="text" id="company" readonly/>
-                            <label class="mdl-textfield__label" for="company">Choix Companie</label>
-                            <ul style="overflow: auto; height: 350px" id="companyUl" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="company">
-                                <li class="mdl-menu__item">Selectionner la companie</li>
-                            </ul>
-                        </div>
-                        <div style="display: none;" id="selectDate" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                            <input class="mdl-textfield__input" type="text" id="dateSelected" placeholder="Date" readonly/>
-                        </div>
-                        <br/>
-                        <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Valider</button>
-                    </div>
+
                 </section>
             </div>
 
