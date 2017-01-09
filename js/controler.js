@@ -1,6 +1,7 @@
 /**
  * Created by Epulapp on 05/10/2016.
  */
+var selectedMode = "NbrVol";
 $(document).ready(function() {
     $.ajax({
         url: "./model.php",
@@ -124,28 +125,9 @@ $(document).ready(function() {
         dateFormat: 'dd/mm/yy'
     });
 
-    //Selection des statistiques à afficher
-
-    //Affichage d'un input si une deuxième entrée est attendue
-    $("#dataset").change(function () {
-        var selectItem = $("#dataset").attr("data-val");
-        var selectPlane = $("#selectPlane");
-        var selectCompany = $("#selectCompany");
-        var selectDate = $("#selectDate");
-        selectPlane.hide();
-        selectCompany.hide();
-        selectDate.hide();
-        if(selectItem == "CompanyPerPlane")
-            selectPlane.show();
-        else if (selectItem == "PlanePerCompany")
-            selectCompany.show();
-        else if(selectItem == "DayFly")
-            selectDate.show();
-
-    })
 });
 
-function initGraph(selectItem) {
+function initGraph(selectItem, toHide) {
     $("#myChart").fadeOut();
 
     //Timeout permettant à l'animation de s'effectuer
@@ -154,21 +136,24 @@ function initGraph(selectItem) {
         $("#myChart").remove();
         var newCanvas = $("<canvas>");
         newCanvas.attr("id","myChart");
-        newCanvas.attr("height","200");
         newCanvas.attr("style","display: none");
         $("#canvasDiv").append(newCanvas);
-        var selectPlane = $("#selectPlane");
-        var selectCompany = $("#selectCompany");
-        var selectDate = $("#selectDate");
-        selectPlane.hide();
-        selectCompany.hide();
-        selectDate.hide();
-        if(selectItem == "CompanyPerPlane")
-            selectPlane.fadeIn();
-        else if (selectItem == "PlanePerCompany")
-            selectCompany.fadeIn();
-        else if(selectItem == "DayFly")
-            selectDate.fadeIn();
+        var selectedGraph = $("#selectGraph :selected").val();
+
+        if(toHide == undefined) {
+            var selectPlane = $("#selectPlane");
+            var selectCompany = $("#selectCompany");
+            var selectDate = $("#selectDate");
+            selectPlane.hide();
+            selectCompany.hide();
+            selectDate.hide();
+            if (selectItem == "CompanyPerPlane")
+                selectPlane.fadeIn();
+            else if (selectItem == "PlanePerCompany")
+                selectCompany.fadeIn();
+            else if (selectItem == "DayFly")
+                selectDate.fadeIn();
+        }
 
         //Récupérer les bonnes données en base en fonction de celle choisi
         switch(selectItem){
@@ -182,12 +167,12 @@ function initGraph(selectItem) {
                 getDBInfo("numberFlyByPlane", true, ["Nombre de vol"], "logarithmic");
                 break;
             case "CompanyPerPlane":
-                var planeSelected = $("#plane").attr("data-val");
+                var planeSelected = $("#planeSelected :selected").val();
                 getDBInfo("companyPerPlane", false, ["Utilisation de l'avion " + planeSelected],
                     "linear", "&plane=" + planeSelected);
                 break;
             case "PlanePerCompany":
-                var companySelected = $("#company").attr("data-val");
+                var companySelected = $("#companySelected :selected").val();
                 getDBInfo("planePerCompany", false, ["Utilisation des avions par " + companySelected],
                     "linear", "&company=" + companySelected);
                 break;
@@ -220,6 +205,7 @@ function initGraph(selectItem) {
                 return;
         }
     },500);
+    selectedMode = selectItem;
 }
 
 //Initialiser les list avec les données récupérer en base
@@ -231,7 +217,7 @@ function initHiddenInput() {
         type: "POST",
         data: "queryToExecute=" + mode[0][0],
         success: function (result) {
-            var planeSelector = $("#selectPlane");
+            var planeSelector = $("#planeSelected");
             for (var j = 0; j < result.length; ++j) {
                 planeSelector.append($('<option>', {
                     text: result[j][0]
@@ -244,7 +230,7 @@ function initHiddenInput() {
         type: "POST",
         data: "queryToExecute=" + mode[1][0],
         success: function (result) {
-            var planeSelector = $("#selectCompany");
+            var planeSelector = $("#companySelected");
             for (var j = 0; j < result.length; ++j) {
                 planeSelector.append($('<option>', {
                     text: result[j][0]
@@ -346,42 +332,6 @@ function createGraph(labels, datasets, yType, max, stepSize){
     ctx.fadeIn("slow");
 }
 
-//Changer la légende pour expliquer les différents graphiques implémentés
-function changeInfo(selectedLi) {
-    var p = $("#pInfo");
-    switch(selectedLi){
-        case "NbrVol":
-            p.html("Nombre de départ de l'aéroport pour chaque companie");
-            break;
-        case "PercentVol":
-            p.html("Pourcentage de tous les départs de l'aéroport par compagnie");
-            break;
-        case "NbrPlaneVol":
-            p.html("Nombre de départ de l'aéroport par avion");
-            break;
-        case "CompanyPerPlane":
-            p.html("Utilisation d'un avion suivant les différentes companies");
-            break;
-        case "PlanePerCompany":
-            p.html("Avion(s) utilisé(s) par une companie");
-            break;
-        case "CancelFly":
-            p.html("Nombre de vol(s) annulé(s) par les companies");
-            break;
-        case "TerminalUse":
-            p.html("Nombre de vol partant des différents terminaux de l'aéroport");
-            break;
-        case "ContryDeserv":
-            p.html("Nombre de vol desservant les différents type de pays");
-            break;
-        case "FlyDestination":
-            p.html("Destination des vols partant de l'aéroport de Lyon");
-            break;
-        case "DayFly":
-            p.html("Nombre de vol par compagnie pour un jour donné");
-            break;
-        default:
-            p.html("Cas non implémenté");
-            break;
-    }
+function changeSelectValue(){
+    initGraph(selectedMode, false);
 }

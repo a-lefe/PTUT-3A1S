@@ -198,8 +198,7 @@ ul.tab {
   margin: 0;
   padding: 0;
   overflow: auto;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: rgb(244,67,54);
 }
 
 /* Float the list items side by side */
@@ -208,7 +207,7 @@ ul.tab li {float: left;width:100%}
 /* Style the links inside the list items */
 ul.tab li a {
   display: block;
-  color: black;
+  color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -216,20 +215,10 @@ ul.tab li a {
   font-size: 17px;
 }
 
-/* Change background color of links on hover */
 ul.tab li a:hover {
   background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
 ul.tab li a:focus, .active {
   background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
 }
