@@ -92,9 +92,10 @@ switch($queryToExecute){
         $result = $sql->fetch();
         break;
     case "sortTest":
-        $sql = $pdo->prepare("SELECT gid from test_tri");
+        $sql = $pdo->prepare("SELECT depart from test_tri");
         $sql->execute();
-        $result = $sql->fetch();
+        $result[0] = $sql->fetchAll();
+        $result[1] = $result[0];
         break;
     default:
         echo [];

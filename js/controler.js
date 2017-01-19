@@ -336,17 +336,18 @@ function changeSelectValue(){
     initGraph(selectedMode, false);
 }
 
-function short(){
+function sort(){
     var quickTab = [];
     var mergeTab = [];
 
     $.ajax({
         url: "./model.php",
         type: "POST",
+        async: false,
         data: "queryToExecute=sortTest",
-        success:function (result) {
-            quickTab = result;
-            mergeTab = result;
+        complete:function (result) {
+            quickTab = result.responseJSON[0];
+            mergeTab = result.responseJSON[1];
         }
     });
 
@@ -356,23 +357,23 @@ function short(){
     var beginMerge = new Date();
     mergeSort(mergeTab)
     var endMerge = new Date();
-    $("#quickValue").html(endQuick.getMilliseconds() - beginQuick.getMilliseconds() + " millisecondes");
-    $("#mergeValue").html(endMerge.getMilliseconds() - beginMerge.getMilliseconds()+ " millisecondes");
+    $("#quickValue").html(endQuick.getTime() - beginQuick.getTime() + " millisecondes");
+    $("#mergeValue").html(endMerge.getTime() - beginMerge.getTime()+ " millisecondes");
 }
 
 function quickSort(array, begin, end) {
     var left = begin-1;
     var right = end+1;
 
-    var pivot = array[begin];
+    var pivot = array[begin][0];
 
     if (begin >= end) {
         return;
     }
 
     while(1) {
-        do right--; while(array[right] > pivot);
-        do left++; while(array[left] < pivot);
+        do right--; while(array[right][0] > pivot);
+        do left++; while(array[left][0] < pivot);
 
         if(left < right) {
             swap(array, left, right);
@@ -407,7 +408,7 @@ function merge(left, right)
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0] <= right[0]) {
+        if (left[0][0] <= right[0][0]) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
