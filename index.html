@@ -57,6 +57,7 @@
                 <a href="#overview" class="mdl-layout__tab is-active">Accueil</a>
                 <a href="#features" class="mdl-layout__tab">Statistiques</a>
                 <a href="#allFly" class="mdl-layout__tab">Tous les vols</a>
+                <a href="#sort" class="mdl-layout__tab">Exemple de tri</a>
                 <a href="#aboutUs" class="mdl-layout__tab">Le projet</a>
             </div>
         </header>
@@ -131,14 +132,6 @@
                         <div style="width: 100%">
                             <ul style="list-style-type: none;">
                                 <li>
-                                    <label for="selectGraph">Type de graphique :</label>
-                                    <select id="selectGraph" onchange="changeSelectValue()">
-                                        <option value="logarithmic">Baton adapté</option>
-                                        <option value="linear">Baton standard</option>
-                                        <option value="radar">Radar</option>
-                                    </select>
-                                </li>
-                                <li>
                                     <div style="display: none;" id="selectPlane">
                                         <label for="planeSelected">Avion souhaité :</label>
                                         <select id="planeSelected"  onchange="changeSelectValue()"></select>
@@ -177,6 +170,25 @@
                         </tr>
                     </thead>
                 </table>
+            </div>
+
+            <!-- Section Page de tri -->
+            <div class="mdl-layout__tab-panel" id="sort">
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                    <thead>
+                        <tr>
+                            <td>Tri rapide</td>
+                            <td>Tri fusion</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="quickValue"></td>
+                            <td id="mergeValue"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="mdl-button" style="background-color: rgb(244,67,54);color: white; margin-top: 5px" onclick="short()">Trier</button>
             </div>
 
             <!-- Section projet -->

@@ -164,7 +164,7 @@ function initGraph(selectItem, toHide) {
                 getDBInfo("percentOfTotalFly", true, ["Pourcentage des vols"], "logarithmic");
                 break;
             case "NbrPlaneVol":
-                getDBInfo("numberFlyByPlane", true, ["Nombre de vol"], "logarithmic");
+                getDBInfo("numberFlyByPlane", false, ["Nombre de vol"], "logarithmic");
                 break;
             case "CompanyPerPlane":
                 var planeSelected = $("#planeSelected :selected").val();
@@ -334,4 +334,91 @@ function createGraph(labels, datasets, yType, max, stepSize){
 
 function changeSelectValue(){
     initGraph(selectedMode, false);
+}
+
+function short(){
+    var quickTab = [];
+    var mergeTab = [];
+
+    $.ajax({
+        url: "./model.php",
+        type: "POST",
+        data: "queryToExecute=sortTest",
+        success:function (result) {
+            quickTab = result;
+            mergeTab = result;
+        }
+    });
+
+    var beginQuick = new Date();
+    quickSort(quickTab, 0, quickTab.length-1);
+    var endQuick = new Date();
+    var beginMerge = new Date();
+    mergeSort(mergeTab)
+    var endMerge = new Date();
+    $("#quickValue").html(endQuick.getMilliseconds() - beginQuick.getMilliseconds() + " millisecondes");
+    $("#mergeValue").html(endMerge.getMilliseconds() - beginMerge.getMilliseconds()+ " millisecondes");
+}
+
+function quickSort(array, begin, end) {
+    var left = begin-1;
+    var right = end+1;
+
+    var pivot = array[begin];
+
+    if (begin >= end) {
+        return;
+    }
+
+    while(1) {
+        do right--; while(array[right] > pivot);
+        do left++; while(array[left] < pivot);
+
+        if(left < right) {
+            swap(array, left, right);
+        }
+        else break;
+    }
+
+    quickSort(array, begin, right);
+    quickSort(array, right+1, end);
+}
+
+function swap(array, idx1, idx2) {
+    var tmp = array[idx1];
+    array[idx1] = array[idx2];
+    array[idx2] = tmp;
+}
+
+function mergeSort(arr)
+{
+    if (arr.length < 2)
+        return arr;
+
+    var middle = parseInt(arr.length / 2);
+    var left   = arr.slice(0, middle);
+    var right  = arr.slice(middle, arr.length);
+
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right)
+{
+    var result = [];
+
+    while (left.length && right.length) {
+        if (left[0] <= right[0]) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+
+    while (left.length)
+        result.push(left.shift());
+
+    while (right.length)
+        result.push(right.shift());
+
+    return result;
 }

@@ -5,8 +5,8 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: application/json');
 
 
-//$pdo = require_once('model/connect_mysql.php');
-$pdo = require_once('model/connect_localhost.php');
+$pdo = require_once('model/connect_mysql.php');
+//$pdo = require_once('model/connect_localhost.php');
 $queryToExecute = $_POST['queryToExecute'];
 $result = null;
 
@@ -88,6 +88,11 @@ switch($queryToExecute){
     case "flyDetails":
         $gid = $_POST['gid'];
         $sql = $pdo->prepare("SELECT flightnumbers_icaoflightnumber, airports_destination_name, airlines_airline_name, timestamps_sobt, airportresources_terminal FROM plane WHERE gid=".$gid);
+        $sql->execute();
+        $result = $sql->fetch();
+        break;
+    case "sortTest":
+        $sql = $pdo->prepare("SELECT gid from test_tri");
         $sql->execute();
         $result = $sql->fetch();
         break;
