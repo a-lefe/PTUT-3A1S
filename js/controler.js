@@ -69,9 +69,6 @@ $(document).ready(function() {
                 });
                 $(".tableData").append(tr);
             }  
-        },
-        error: function (result) {
-            alert(result[0]);//To change
         }
     });
     $.ajax({
@@ -422,4 +419,13 @@ function merge(left, right)
         result.push(right.shift());
 
     return result;
+}
+
+function adaptSize(divID){
+    $("#footer").removeAttr("style");
+    var docHeight = $("#" + divID).height();
+    var winHeight = $(window).height();
+    if(winHeight > docHeight){
+        $("#footer").attr("style", "position: absolute; bottom: 0; width: 100%")
+    }
 }

@@ -54,11 +54,11 @@
             </div>
 
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-                <a href="#overview" class="mdl-layout__tab is-active">Accueil</a>
-                <a href="#features" class="mdl-layout__tab">Statistiques</a>
-                <a href="#allFly" class="mdl-layout__tab">Tous les vols</a>
-                <a href="#sort" class="mdl-layout__tab">Exemple de tri</a>
-                <a href="#aboutUs" class="mdl-layout__tab">Le projet</a>
+                <a href="#overview" class="mdl-layout__tab is-active" onclick="adaptSize('overview')">Accueil</a>
+                <a href="#features" class="mdl-layout__tab" onclick="adaptSize('features')">Statistiques</a>
+                <a href="#allFly" class="mdl-layout__tab" onclick="adaptSize('allFly')">Tous les vols</a>
+                <a href="#sort" class="mdl-layout__tab" onclick="adaptSize('sort')">Exemple de tri</a>
+                <a href="#aboutUs" class="mdl-layout__tab" onclick="adaptSize('aboutUs')">Le projet</a>
             </div>
         </header>
 
@@ -113,8 +113,8 @@
             </div>
 
             <!-- Section Statistique -->
-            <div class="mdl-layout__tab-panel" id="features" style="padding: 0px;">
-                <section style="height: 800px;padding: 0px" class="mdl-grid">
+            <div class="mdl-layout__tab-panel" id="features" style="padding: 0px; margin-bottom: 10px">
+                <section style="height: 700px;padding: 0px" class="mdl-grid">
                     <div style="height: 100%;overflow: auto; width: 10%; float: left">
                         <ul class="tab">
                             <li title="Nombre de départ de l'aéroport pour chaque companie"><a href="javascript:void(0)" class="tablinks" onclick="initGraph('NbrVol')">Vol des companies</a></li>
@@ -159,7 +159,7 @@
             </div>
 
             <!-- Section Tous les vols -->
-            <div class="mdl-layout__tab-panel" id="allFly">
+            <div class="mdl-layout__tab-panel" id="allFly" style="margin-bottom: 10px">
                 <table id="flyTable" class="display" cellspacing="0" width="100%">
                     <thead>
                         <tr>
@@ -173,26 +173,37 @@
             </div>
 
             <!-- Section Page de tri -->
-            <div class="mdl-layout__tab-panel" id="sort">
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-                    <thead>
-                        <tr>
-                            <td>Tri rapide</td>
-                            <td>Tri fusion</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="quickValue"></td>
-                            <td id="mergeValue"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="mdl-button" style="background-color: rgb(244,67,54);color: white; margin-top: 5px" onclick="sort()">Trier</button>
+            <div class="mdl-layout__tab-panel" id="sort" style="margin-bottom: 10px">
+                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+                <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
+                    <i class="material-icons"><img src="images/tri.png" alt="Tri" height="200" width="200"></i>
+                </header>
+                    <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+                        <div class="mdl-card__supporting-text">
+                            <h4>Comparaison d'algorithme de tri</h4>
+                            Différence entre tri fusion et tri rapide
+                        </div>
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="margin: 0 auto">
+                        <thead>
+                            <tr>
+                                <td>Tri rapide</td>
+                                <td>Tri fusion</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="quickValue"></td>
+                                <td id="mergeValue"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="mdl-button" style="background-color: rgb(244,67,54);color: white; margin-top: 10px" onclick="sort()">Trier</button>
+                    </div>
+                </section>
             </div>
 
             <!-- Section projet -->
-            <div class="mdl-layout__tab-panel" id="aboutUs">
+            <div class="mdl-layout__tab-panel" id="aboutUs" style="margin-bottom: 10px">
               <section class="section--footer mdl-color--white mdl-grid">
               <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                   <div style="text-align: center;"><img src="images/avatar.png"></div>
@@ -225,7 +236,7 @@
                 </section>
             </div>
 
-            <footer class="mdl-mini-footer">
+            <footer class="mdl-mini-footer" id="footer">
                 <div class="mdl-mini-footer__left-section">
                     <div class="mdl-logo">Copyright</div>
                     <ul class="mdl-mini-footer__link-list">
@@ -243,10 +254,10 @@
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script src="js/dataTable.js"></script>
 <script src="js/Chart.js/Chart.js"></script>
-<script src="js/controler.js"></script>
 <script src="./js/material.min.js"></script>
 <script src="js/mdl-selectfield.min.js"></script>
 <script src="http://getmdl-select.min.css.map"></script>
+<script src="js/controler.js"></script>
 
 
 <script>
